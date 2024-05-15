@@ -1,0 +1,32 @@
+.list{
+    display: flex !important;
+    flex-direction: row;
+    column-gap: 40px;
+    align-items: center;
+    justify-content: space-between;
+}
+.col_tr, .col_en{
+    text-transform: capitalize;
+    max-width: 300px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    /* flex-direction: column; */
+    column-gap: 20px;
+    row-gap: 5px;
+}
+
+.wraper{
+    /* margin-top: 50px; */
+    --ion-background-color: #fff;
+}
+
+.button_container{
+    display: flex;
+    column-gap: 10px;
+    height: min-content;
+}
+.col_en{
+    max-width: 200px;
+    width: 100%;
+}

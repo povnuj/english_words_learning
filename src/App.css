@@ -1,0 +1,8 @@
+.wraper{
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+}
+.ion-padding{
+    --ion-padding: 50px;
+}
