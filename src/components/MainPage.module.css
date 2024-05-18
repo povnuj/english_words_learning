@@ -1,0 +1,6 @@
+.ion_padding{
+    min-width: 350px;
+    --padding-top: 50px;
+    --padding-start: 10px;
+    --padding-end: 10px;
+}

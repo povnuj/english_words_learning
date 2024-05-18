@@ -8,8 +8,8 @@ class Word{
             trWords: tr,
             learned: false,
             learning: false,
-            posAnswer: 0,
-            negAnswer: 0,
+            posAnswer: 1,
+            negAnswer: 1,
         }
     }
 }

@@ -13,6 +13,7 @@ const WordsState = createContext<WordsStateInterface>({
   words: [],
   favoriteWords: [],
   editedWordsId: 11,
+  сards: [],
   setState: (type, newState) => {},
 });
 
@@ -32,6 +33,12 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
           ...state,
         }
 
+      case WordsStatesType.AddCards:
+        return {
+          ...state,
+          сards: action.newState
+        }
+
       case WordsStatesType.AddList:
         return {
           ...state,
@@ -48,11 +55,14 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
         };
 
       case WordsStatesType.FaworiteWords:
-        const favorite = !state.words[action.newState].learning;
+        const i = typeof action.newState === "number"? action.newState : state.words.findIndex(el => el.id === action.newState)
+        const favorite = !state.words[i].learning;
         if (LoginedUser){
-          LoginedUser.isValid(FirebaseTypes.Update, {learning: favorite}, state.words[action.newState].id);
+          LoginedUser.isValid(FirebaseTypes.Update, {learning: favorite, posAnswer: 1, negAnswer: 1}, state.words[i].id );
         } 
-        state.words[action.newState].learning = favorite;
+        state.words[i].learning = favorite;
+        state.words[i].posAnswer = 0;
+        state.words[i].negAnswer = 1;
         return {
           ...state,
         };
@@ -82,13 +92,12 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
         state.words[state.editedWordsId].trWords = obj.trWords;
         return {
           ...state,
-         // words: WordsListServices.edit(action.newState),
       };
 
       case WordsStatesType.FilterWords:
-        if (LoginedUser){
-          //LoginedUser.isValid(FirebaseTypes.Remove, state.words[0], state.words[action.newState].id);
-        }   
+        // if (LoginedUser){
+        //   //LoginedUser.isValid(FirebaseTypes.Remove, state.words[0], state.words[action.newState].id);
+        // }   
 
         console.log(state.words.filter(el => el.enWords.filter(en => en)));
         const filtered = state.words.filter(el => el.enWords.filter(en => en).toString().includes(action.newState.toLowerCase()));
@@ -96,6 +105,33 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
           ...state,
           words: filtered,
         };
+
+      case WordsStatesType.Answer:
+          // console.log(action.newState)
+
+          //negAnswer: number;
+        if (LoginedUser){
+          if(action.newState.answer){
+            const i = state.words.findIndex(el => el.id ===  action.newState.id)
+            LoginedUser.isValid(FirebaseTypes.Update, {posAnswer: ++state.words[i].posAnswer}, action.newState.id);
+          }else{
+            const i = state.words.findIndex(el => el.id ===  action.newState.id)
+            LoginedUser.isValid(FirebaseTypes.Update, {negAnswer: ++state.words[i].negAnswer}, action.newState.id);
+          }
+        } 
+
+        return {
+          ...state,
+      };  
+      
+      case WordsStatesType.StudiedWords:
+        if (LoginedUser){
+       //     LoginedUser.isValid(FirebaseTypes.Update, {posAnswer: ++state.words[i].posAnswer}, action.newState.id);
+        } 
+
+        return {
+          ...state,
+      };  
 
       default:
         return state;
@@ -106,6 +142,7 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
     words: [],
     favoriteWords: [],
     editedWordsId: 1,
+    сards: [],
     setState: (type, newState) => {
       dispatch({ type, newState });
     },

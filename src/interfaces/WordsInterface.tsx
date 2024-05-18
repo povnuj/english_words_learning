@@ -15,6 +15,14 @@ export interface WordsInterface {
     negAnswer: number;
 };
 
+export interface CardInterface {
+    id: string;
+    en: string;
+    tr: string;
+    falseEn: string;
+    falseTr: string;
+    progress: number;
+}
 
 //context interfaces===============================
 export interface ActionInterface {
@@ -25,6 +33,7 @@ export interface ActionInterface {
 export interface WordsStateInterface {
     words: WordsInterface[];
     favoriteWords: WordsInterface[];
+    сards: CardInterface[];
     editedWordsId: number;
     setState?: (type: string, newState: any ) => void;
 };
@@ -34,10 +43,15 @@ export interface UiStateInterface {
     isOpenEditForm: boolean;
     isOpenLerningPage: boolean;
     cardColor: string;
+    progressChange: boolean;
+    studiedWord: boolean,
     cardFilter: {
         marked: boolean,
         all: boolean,
-        rotate: boolean
+        changeLanguage: boolean,
+        learningMode: boolean,
+        learningModePeekUp: boolean,
+        shuffle: boolean
     };
     setState?: (type: string, newState: any ) => void;
 };
