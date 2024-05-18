@@ -1,8 +1,7 @@
 import React, { useContext} from "react";
 import css from './ListWords.module.css';
-import { IonItem, IonLabel, IonList } from "@ionic/react";
-import { IonButton, IonIcon } from '@ionic/react';
-import { heart, bookmark, settingsSharp, trash,sadOutline } from 'ionicons/icons';
+import { IonItem, IonLabel, IonList, IonButton, IonFab, IonFabButton, IonFabList, IonIcon} from '@ionic/react';
+import { ellipsisVerticalOutline, bookmark, settingsSharp, trash, sadOutline } from 'ionicons/icons';
 import { WordsState} from "../../context/words-context";
 import { UiState } from "../../context/ui-context";
 import { WordsStatesType, UiStatesType } from "../../types/ListTypes";
@@ -38,16 +37,22 @@ const ListWords: React.FC = () => {
                 <div key={+Math.random() * 10000 + Math.random() * 10000}>{trWord}</div>)}
             </div>
             <div className={css.button_container}>
-              <IonButton shape="round" color={"light"} onClick={favoriteHandler.bind(null, index)}>
-                <IonIcon slot="icon-only" icon={bookmark} color={word.learning?"primary":"dark"} ></IonIcon>
-              </IonButton>
-
-              <IonButton size="small" color={"light"} onClick={editHandler.bind(null, index)}>
-                <IonIcon slot="icon-only" md={settingsSharp}></IonIcon>
-              </IonButton>
-              <IonButton size="small" color={"light"} onClick={removeHandler.bind(null, index)}>
-                <IonIcon slot="icon-only" icon={trash}></IonIcon>
-              </IonButton>
+              <IonFab className={css.fab}>
+                <IonFabButton size="small" className={css.fab_btn} color={"light"}>
+                  <IonIcon icon={ellipsisVerticalOutline}></IonIcon>
+                </IonFabButton >
+                <IonFabList side="start" className={css.fab_list}>
+                  <IonFabButton onClick={favoriteHandler.bind(null, index)}>
+                    <IonIcon icon={bookmark} color={word.learning?"primary":"dark"}></IonIcon>
+                  </IonFabButton>
+                  <IonFabButton onClick={editHandler.bind(null, index)}>
+                    <IonIcon icon={settingsSharp}></IonIcon>
+                  </IonFabButton>
+                  <IonFabButton onClick={removeHandler.bind(null, index)}>
+                    <IonIcon icon={trash}></IonIcon>
+                  </IonFabButton>
+                </IonFabList>
+              </IonFab>
             </div>
           </IonLabel>
         </IonItem>)} 

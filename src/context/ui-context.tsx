@@ -7,10 +7,15 @@ const UiState = createContext<UiStateInterface>({
     isOpenEditForm: false,
     isOpenLerningPage: false,
     cardColor: "light",
+    progressChange: false,
+    studiedWord: false,
     cardFilter: {
         marked: false,
         all: true,
-        rotate: false
+        changeLanguage: false,
+        learningMode: false,
+        learningModePeekUp: false,
+        shuffle: false,
     },
     setState: (newState) => {}
 });
@@ -45,10 +50,15 @@ const UiStateProvider:React.FC<PropsProviderInterface> = (props) =>{
                 };
 
             case UiStatesType.CardFilter:
-               // console.log(action.newState)
                 return {
                     ...state,
-                    cardFilter: action.newState
+                    cardFilter: {...state.cardFilter, ...action.newState},
+                };
+
+            case UiStatesType.ChangeProgress:
+                return {
+                    ...state,
+                    progressChange: !state.progressChange,
                 };
 
 
@@ -64,10 +74,15 @@ const UiStateProvider:React.FC<PropsProviderInterface> = (props) =>{
         isOpenEditForm: false,
         isOpenLerningPage: false,
         cardColor: "light",
+        progressChange: false,
+        studiedWord: false,
         cardFilter: {
             marked: false,
             all: true,
-            rotate: false
+            changeLanguage: false,
+            learningMode: false,
+            learningModePeekUp: false,
+            shuffle: false,
         },
         setState: (type, newState) => {
             dispatch({type, newState});

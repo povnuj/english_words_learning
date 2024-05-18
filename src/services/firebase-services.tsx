@@ -45,14 +45,11 @@ export class Firebase{
             for (let key in responseData.words) {
                 arr.push({id: key, ...responseData.words[key]})
               }
-            return arr;
+            return arr.reverse();
         }
         return true;
     }
     login(){}
-    update(){}
-    remove(){}
-    add(){}
 }
 
 

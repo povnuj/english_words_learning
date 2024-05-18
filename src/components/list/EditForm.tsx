@@ -38,7 +38,6 @@ function EditForm() {
   const saveHendler = () => {
     const en: string = inputEn.current!.value!.toString()!;
     const tr: string = inputTr.current!.value!.toString()!;
-    //const id: number = wctx.editedWordsId;
     if(en.trim() && tr.trim()) {
       wctx.setState!(WordsStatesType.EditWords, {en, tr});
       closeModalHendler();
@@ -50,7 +49,6 @@ function EditForm() {
     <IonModal isOpen={ictx.isOpenEditForm}  backdropDismiss={false} color="light">
       <IonHeader>
         <IonToolbar color="light">
-          {/* <IonTitle>Add new</IonTitle> */}
           <IonButtons slot="start" onClick={closeModalHendler}>
             <IonButton>Close</IonButton>
           </IonButtons>
