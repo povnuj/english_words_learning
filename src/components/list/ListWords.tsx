@@ -39,7 +39,7 @@ const ListWords: React.FC = () => {
             <div className={css.button_container}>
               <IonFab className={css.fab}>
                 <IonFabButton size="small" className={css.fab_btn} color={"light"}>
-                  <IonIcon icon={ellipsisVerticalOutline}></IonIcon>
+                  <IonIcon icon={ellipsisVerticalOutline} color={word.learning?"primary":""}></IonIcon>
                 </IonFabButton >
                 <IonFabList side="start" className={css.fab_list}>
                   <IonFabButton onClick={favoriteHandler.bind(null, index)}>

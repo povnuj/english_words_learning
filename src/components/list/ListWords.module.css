@@ -34,12 +34,24 @@
      position: relative; 
      right: 5px;
     /* bottom: 7px; */
+    
 }
+.button-native{
+    box-shadow: none !important;
+}
+ion-fab-button::part(native) {
+    background-color: transparent;
+    /* border-radius: 15px;  */
+    box-shadow: none;
+  }
+  
+
 .fab_btn{
     margin: 0;
     width: 30px;
     height: 30px;
     background: transparent;
+    
 }
 .fab_list{
     align-items: baseline;

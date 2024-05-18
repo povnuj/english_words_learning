@@ -58,9 +58,11 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
         const i = typeof action.newState === "number"? action.newState : state.words.findIndex(el => el.id === action.newState)
         const favorite = !state.words[i].learning;
         if (LoginedUser){
-          LoginedUser.isValid(FirebaseTypes.Update, {learning: favorite}, state.words[i].id );
+          LoginedUser.isValid(FirebaseTypes.Update, {learning: favorite, posAnswer: 1, negAnswer: 1}, state.words[i].id );
         } 
         state.words[i].learning = favorite;
+        state.words[i].posAnswer = 0;
+        state.words[i].negAnswer = 1;
         return {
           ...state,
         };
