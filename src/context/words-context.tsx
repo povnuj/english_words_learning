@@ -27,7 +27,7 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
         if (LoginedUser){
             LoginedUser.isValid(FirebaseTypes.Add, word);
         }   
-        state.words.push(word);
+        state.words.unshift(word);
         return {
           ...state,
         }

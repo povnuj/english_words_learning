@@ -4,6 +4,7 @@ import { UiState } from "../../context/ui-context";
 import { UiStatesType } from "../../types/ListTypes";
 import { WordsState } from "../../context/words-context";
 import { WordsStatesType } from "../../types/ListTypes";
+import { LoginedUser } from "../../services/user-servises"
 import {
   IonButtons,
   IonButton,
@@ -31,8 +32,10 @@ function AddForm() {
     const tr: string = inputTr.current!.value!.toString()!;
     if(en.trim() && tr.trim()) {
       wctx.setState!(WordsStatesType.AddNewWord, {en, tr});
+ 
       closeModalHendler();
     }
+    
   };
 
 

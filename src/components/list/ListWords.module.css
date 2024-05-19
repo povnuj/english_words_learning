@@ -43,7 +43,7 @@ ion-fab-button::part(native) {
     background-color: transparent;
     /* border-radius: 15px;  */
     box-shadow: none;
-  }
+}
   
 
 .fab_btn{
