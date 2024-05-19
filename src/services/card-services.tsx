@@ -1,7 +1,7 @@
 
-import { CardFilterTypes, UiStatesType } from "../types/ListTypes";
+import { CardFilterTypes, UiStatesType, WordsStatesType, FirebaseTypes } from "../types/ListTypes";
 import { UiStateInterface, WordsStateInterface, WordsInterface, CardInterface} from '../interfaces/WordsInterface';
-
+import { LoginedUser } from "../services/user-servises";
 
 class CardFilter {
     action: CardFilterTypes;
@@ -51,23 +51,8 @@ class CardFilter {
     };
     
 }
-class CCard {
-    obj: CardInterface;
-    constructor(id: string, en: string, tr: string, falseEn: string, falseTr: string, word: WordsInterface){
-        this.obj = {
-            id, 
-            en,
-            tr, 
-            falseEn, 
-            falseTr, 
-            progress: this.progressHandler(word)
-        }
-    }
-    progressHandler(word: WordsInterface){
-        return  word.posAnswer / (word.negAnswer *8)
-    }
-}
- class Random{
+
+class Random{
     
     constructor(){
     }
@@ -93,38 +78,53 @@ class CCard {
     
 }
 
-class Generate extends Random{
-    constructor(){
+class CCard extends Random {
+    ictx: UiStateInterface;
+    wctx: WordsStateInterface;
+    result: CardInterface[];
+
+    constructor(ictx: UiStateInterface, wctx: WordsStateInterface){
         super();
-    }
-    allCards(words: WordsInterface[]){
-       return words.map((el) => {
-            return new CCard(
-                el.id!, 
-                el.enWords[0], 
-                el.trWords[this.randomNumber(el.trWords.length)], 
-                this.randomAnswer(words, true, el.id!), 
-                this.randomAnswer(words, false, el.id!,),
-                el).obj
-        });
+        this.ictx = ictx;
+        this.wctx = wctx;
+        this.result = [];
     }
 
-    selectedCards(words: WordsInterface[]){
-        return words.map((el) => {
-            if(el.learning === true)
-                { 
-                return new CCard(
-                    el.id!, 
-                    el.enWords[0], 
-                    el.trWords[this.randomNumber(el.trWords.length)], 
-                    this.randomAnswer(words, true, el.id!), 
-                    this.randomAnswer(words, false, el.id!),
-                    el).obj
-            }
-        }).filter(el => typeof el !== "undefined");
+    card(word: WordsInterface){
+        const obj: CardInterface = {
+            id: word.id!, 
+            en: word.enWords[0],
+            tr: word.trWords[this.randomNumber(word.trWords.length)],
+            randomBtnPosition: this.randomNumber(100),
+            falseEn: this.randomAnswer(this.wctx.words, true, word.id!),
+            falseTr: this.randomAnswer(this.wctx.words, false, word.id!),
+            progress: word.posAnswer / (word.negAnswer *8)
+        }
+        return obj;
     }
-    randomCard(words: WordsInterface[], allWords: boolean){
-        
+
+    private setCardToContext(){
+        this.wctx.setState!(WordsStatesType.AddCards, this.result);
+    }
+
+    generateAllCards(wordsArr?: WordsInterface[]){
+        let words =  wordsArr ? wordsArr : this.wctx.words;
+        this.result = [];
+        this.result = words.map((el) => {
+            return this.card(el);
+        });
+        this.setCardToContext();
+    }
+
+    generateSelectedCards(wordsArr?: WordsInterface[]){
+        let words =  wordsArr ? wordsArr : this.wctx.words;
+        this.result = [];
+        this.result = words.filter(el => el.learning ).map(el => this.card(el));
+        this.setCardToContext();
+    }
+
+    generateRandomCard(){
+        let words = this.wctx.words;
         const randomize = (words: WordsInterface[]) =>{
              let index = words.length;
              while (index != 0) {
@@ -137,14 +137,51 @@ class Generate extends Random{
 
         randomize(words);
 
-        if (allWords) return this.allCards(words);
-        else return this.selectedCards(words);
+        if (this.ictx.cardFilter.all) {
+            return this.generateAllCards(words);
+        }else{
+            return this.generateSelectedCards(words);
+        }    
     }
-    isDone(){
+    peekUp(){
+        this.ictx.setState!(UiStatesType.CardFilter, {learningModePeekUp: true});
+        let timer =  setTimeout(()=>{
+            this.ictx.setState!(UiStatesType.CardFilter, {learningModePeekUp: false});
+            clearTimeout(timer);
+        }, 400);
+    }
+
+    trueAnswer(id: string){
+
+        if (LoginedUser){
+
+            const i =  this.wctx.words.findIndex(el => el.id ===  id)
+            LoginedUser.isValid(FirebaseTypes.Update, {posAnswer: ++this.wctx.words[i].posAnswer}, id);
         
+            if(this.wctx.сards.find(el => el.id === id)!.progress >= 1){
+                this.wctx.setState!(WordsStatesType.FaworiteWords, id);
+            }
+
+            this.ictx.setState!(UiStatesType.ChangeProgress, true);
+        }
+    }
+    falseAnswer(id: string){
+        if (LoginedUser){
+
+            const i =  this.wctx.words.findIndex(el => el.id ===  id)
+            LoginedUser.isValid(FirebaseTypes.Update, {negAnswer: ++this.wctx.words[i].negAnswer}, id);
+
+            this.ictx.setState!(UiStatesType.CardColor, false);
+            this.ictx.setState!(UiStatesType.ChangeProgress, true);
+            let timer =  setTimeout(()=>{
+                this.ictx.setState!(UiStatesType.CardColor, true);
+                clearTimeout(timer);
+            }, 400);
+        }   
     }
 
 }
+
 
 
 
@@ -152,5 +189,5 @@ export {
     CCard,
     Random,
     CardFilter,
-    Generate
+   // Generate
 }

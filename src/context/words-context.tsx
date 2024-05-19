@@ -11,7 +11,6 @@ import { LoginedUser } from "../services/user-servises";
 
 const WordsState = createContext<WordsStateInterface>({
   words: [],
-  favoriteWords: [],
   editedWordsId: 11,
   сards: [],
   setState: (type, newState) => {},
@@ -95,11 +94,6 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
       };
 
       case WordsStatesType.FilterWords:
-        // if (LoginedUser){
-        //   //LoginedUser.isValid(FirebaseTypes.Remove, state.words[0], state.words[action.newState].id);
-        // }   
-
-        console.log(state.words.filter(el => el.enWords.filter(en => en)));
         const filtered = state.words.filter(el => el.enWords.filter(en => en).toString().includes(action.newState.toLowerCase()));
         return {
           ...state,
@@ -107,28 +101,6 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
         };
 
       case WordsStatesType.Answer:
-          // console.log(action.newState)
-
-          //negAnswer: number;
-        if (LoginedUser){
-          if(action.newState.answer){
-            const i = state.words.findIndex(el => el.id ===  action.newState.id)
-            LoginedUser.isValid(FirebaseTypes.Update, {posAnswer: ++state.words[i].posAnswer}, action.newState.id);
-          }else{
-            const i = state.words.findIndex(el => el.id ===  action.newState.id)
-            LoginedUser.isValid(FirebaseTypes.Update, {negAnswer: ++state.words[i].negAnswer}, action.newState.id);
-          }
-        } 
-
-        return {
-          ...state,
-      };  
-      
-      case WordsStatesType.StudiedWords:
-        if (LoginedUser){
-       //     LoginedUser.isValid(FirebaseTypes.Update, {posAnswer: ++state.words[i].posAnswer}, action.newState.id);
-        } 
-
         return {
           ...state,
       };  
@@ -140,7 +112,6 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
 
   let initialState: WordsStateInterface = {
     words: [],
-    favoriteWords: [],
     editedWordsId: 1,
     сards: [],
     setState: (type, newState) => {
