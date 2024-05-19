@@ -19,6 +19,7 @@ export interface CardInterface {
     id: string;
     en: string;
     tr: string;
+    randomBtnPosition: number;
     falseEn: string;
     falseTr: string;
     progress: number;
@@ -32,7 +33,6 @@ export interface ActionInterface {
 
 export interface WordsStateInterface {
     words: WordsInterface[];
-    favoriteWords: WordsInterface[];
     сards: CardInterface[];
     editedWordsId: number;
     setState?: (type: string, newState: any ) => void;
@@ -42,7 +42,7 @@ export interface UiStateInterface {
     isOpenAddForm: boolean;
     isOpenEditForm: boolean;
     isOpenLerningPage: boolean;
-    cardColor: string;
+    cardColor: boolean;
     progressChange: boolean;
     studiedWord: boolean,
     cardFilter: {

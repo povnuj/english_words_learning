@@ -1,73 +1,52 @@
-import {useContext, useEffect, useState } from "react";
+import {ChangeEvent, SyntheticEvent, useContext, useEffect, useState } from "react";
 import { UiState } from '../../../context/ui-context';
 import { WordsState } from "../../../context/words-context";
 import { UiStatesType, WordsStatesType} from '../../../types/ListTypes';
 import { IonButton, IonCard, IonCardContent, IonIcon, IonCardHeader, IonLabel, IonCardSubtitle, IonCardTitle } from '@ionic/react';
 import { eyeOutline } from 'ionicons/icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Random, Generate} from "../../../services/card-services";
+import { Random, CCard} from "../../../services/card-services";
 import { IonProgressBar } from '@ionic/react';
+import './Card.css';
 import 'swiper/css';
 import 'swiper/css/effect-cards';
-import './Card.css';
 import { EffectCards } from 'swiper/modules';
+import { MouseEventHandler } from "react";
+import { SyntheticEventData } from "react-dom/test-utils";
 
 const Card = () => {
     const ictx = useContext(UiState);
     const wctx = useContext(WordsState);
     const [swiper, setSwiper] = useState<any>();
-
-     useEffect(()=>{
-        if(ictx.cardFilter.all && !ictx.cardFilter.shuffle ) wctx.setState!(WordsStatesType.AddCards, new Generate().allCards(wctx.words));
-        else if(ictx.cardFilter.shuffle && ictx.cardFilter.all) wctx.setState!(WordsStatesType.AddCards, new Generate().randomCard(wctx.words, true));
-
-        if(ictx.cardFilter.marked && !ictx.cardFilter.shuffle) wctx.setState!(WordsStatesType.AddCards, new Generate().selectedCards(wctx.words));
-        else if(ictx.cardFilter.shuffle && ictx.cardFilter.marked) wctx.setState!(WordsStatesType.AddCards, new Generate().randomCard(wctx.words, false));
-      console.log("eff");
-    },[ictx.progressChange, ictx.cardFilter.all, ictx.cardFilter.shuffle]);
-    
-    const peekUpHandler = () => {
-        ictx.setState!(UiStatesType.CardFilter, {learningModePeekUp: !ictx.cardFilter.learningModePeekUp});
-        console.log("timer", ictx.cardFilter.learningModePeekUp);
-
-    };
+    const Cards = new CCard(ictx, wctx);
 
     useEffect(()=>{
-        if(ictx.cardFilter.learningModePeekUp) {
-                let timer =  setTimeout(()=>{
-                    ictx.setState!(UiStatesType.CardFilter, {learningModePeekUp: !ictx.cardFilter.learningModePeekUp});
-                    clearTimeout(timer);
-                    console.log("timer", ictx.cardFilter.learningModePeekUp);
-                }, 900);
-        }
-    },[ictx.cardFilter.learningModePeekUp]);
+      if (ictx.cardFilter.shuffle){ 
+        Cards.generateRandomCard();
+      }
+      if (ictx.cardFilter.all && !ictx.cardFilter.shuffle) {
+        Cards.generateAllCards();
+      }else if (!ictx.cardFilter.shuffle){
+        Cards.generateSelectedCards();
+      }
+      if(wctx.сards.length > 0){
+        swiper!.slideTo(0, 0);
+      }
+      
+    },[ictx.progressChange, ictx.cardFilter.all, ictx.cardFilter.learningModePeekUp, ictx.cardFilter.shuffle]);
+    
+     const peekUpHandler = () => {
+        Cards.peekUp();
+    };
 
     function trueAnswerHandler(id: string)  {
         swiper!.slideNext();
-        wctx.setState!(WordsStatesType.Answer, {answer: true, id});
-        
-        if(wctx.сards.find(el => el.id === id)!.progress >= 1){
-          wctx.setState!(WordsStatesType.FaworiteWords, id);
-        }
-          
-      
-        
-        ictx.setState!(UiStatesType.ChangeProgress, true);
-        console.log("answer", wctx.words)
+        Cards.trueAnswer(id);
     };
 
     function falseAnswerHandler(id: string) {
-        ictx.setState!(UiStatesType.CardColor, "danger");
-        wctx.setState!(WordsStatesType.Answer, {answer: false, id});
-        ictx.setState!(UiStatesType.ChangeProgress, true);
-        let timer =  setTimeout(()=>{
-            ictx.setState!(UiStatesType.CardColor, "light");
-            clearTimeout(timer);
-        }, 400);
-       // console.log("answer", wctx.words)
+        Cards.falseAnswer(id);
     };
-
-    
    
     return(
         <div className={`wraper`} >
@@ -83,7 +62,7 @@ const Card = () => {
             >
                 { wctx.сards.map((word, index)  => 
                 <SwiperSlide key={word.id}>
-                    <IonCard className="ion-card" color={ictx.cardColor}>
+                    <IonCard className="ion-card" color={ictx.cardColor?"light" : "danger"}>
                     { ictx.cardFilter.marked ?
                       <IonProgressBar value={word.progress} color={"tertiary"} className="progress_bar"></IonProgressBar>
                       : ''
@@ -93,15 +72,15 @@ const Card = () => {
                       </IonCardHeader>
                       <IonCardContent className="ion-card-content">
                       { !ictx.cardFilter.learningMode ?
-                         new Random().randomNumber(100) < 50 ? (
+                          word.randomBtnPosition < 50 ? (
                             <> 
-                              <IonButton fill="clear" color={"dark"} onClick={trueAnswerHandler.bind(null, word.id)}>{ictx.cardFilter.changeLanguage === true ? word.en : word.tr}</IonButton>
-                              <IonButton fill="clear" color={"dark"} onClick={falseAnswerHandler.bind(null, word.id)}>{ictx.cardFilter.changeLanguage === true ? word.falseEn : word.falseTr}</IonButton>
+                              <IonButton fill="clear" color={"dark"} type="button" onClick={trueAnswerHandler.bind(null, word.id)}>{ictx.cardFilter.changeLanguage === true ? word.en : word.tr}</IonButton>
+                              <IonButton fill="clear" color={"dark"} type="reset" onClick={falseAnswerHandler.bind(this, word.id)}>{ictx.cardFilter.changeLanguage === true ? word.falseEn : word.falseTr}</IonButton>
                             </>
                         ) : (
                             <>
-                              <IonButton fill="clear" color={"dark"} onClick={falseAnswerHandler.bind(null, word.id)}>{ictx.cardFilter.changeLanguage === true ? word.falseEn : word.falseTr}</IonButton>
-                              <IonButton fill="clear" color={"dark"} onClick={trueAnswerHandler.bind(null, word.id)}>{ictx.cardFilter.changeLanguage === true ? word.en : word.tr}</IonButton>
+                              <IonButton fill="clear" color={"dark"} type="reset" onClick={falseAnswerHandler.bind(this, word.id)}>{ictx.cardFilter.changeLanguage === true ? word.falseEn : word.falseTr}</IonButton>
+                              <IonButton fill="clear" color={"dark"} type="button" onClick={trueAnswerHandler.bind(null, word.id)}>{ictx.cardFilter.changeLanguage === true ? word.en : word.tr}</IonButton>
                             </> 
                         ) : (
                             !ictx.cardFilter.learningModePeekUp?(
