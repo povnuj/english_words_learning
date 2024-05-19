@@ -1,18 +1,15 @@
-import {ChangeEvent, SyntheticEvent, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UiState } from '../../../context/ui-context';
 import { WordsState } from "../../../context/words-context";
-import { UiStatesType, WordsStatesType} from '../../../types/ListTypes';
 import { IonButton, IonCard, IonCardContent, IonIcon, IonCardHeader, IonLabel, IonCardSubtitle, IonCardTitle } from '@ionic/react';
 import { eyeOutline } from 'ionicons/icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Random, CCard} from "../../../services/card-services";
+import { CCard} from "../../../services/card-services";
 import { IonProgressBar } from '@ionic/react';
 import './Card.css';
 import 'swiper/css';
 import 'swiper/css/effect-cards';
 import { EffectCards } from 'swiper/modules';
-import { MouseEventHandler } from "react";
-import { SyntheticEventData } from "react-dom/test-utils";
 
 const Card = () => {
     const ictx = useContext(UiState);
@@ -26,14 +23,14 @@ const Card = () => {
       }
       if (ictx.cardFilter.all && !ictx.cardFilter.shuffle) {
         Cards.generateAllCards();
+        //swiper!.slideTo(0, 0);
       }else if (!ictx.cardFilter.shuffle){
         Cards.generateSelectedCards();
+        //swiper!.slideTo(0, 0);
       }
-      if(wctx.сards.length > 0){
-        swiper!.slideTo(0, 0);
-      }
+ 
       
-    },[ictx.progressChange, ictx.cardFilter.all, ictx.cardFilter.learningModePeekUp, ictx.cardFilter.shuffle]);
+    },[ictx.progressChange, ictx.cardFilter.all, ictx.cardFilter.shuffle]);
     
      const peekUpHandler = () => {
         Cards.peekUp();
