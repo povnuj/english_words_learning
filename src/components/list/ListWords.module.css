@@ -1,5 +1,7 @@
 .list{
     display: flex !important;
+     width: 70vh;
+    /* max-width: 800px; */
     flex-direction: row;
     column-gap: 40px;
     align-items: center;
@@ -59,3 +61,14 @@ ion-fab-button::part(native) {
 .item-inner{
 padding-right: 5px;
 }
+
+.label-text-wrapper{
+    width: 100%;
+}
+.checkbox-wrapper{
+    justify-content: space-between;
+}
+ion-checkbox {
+    width: 100%;
+    /* max-width: 50px; */
+  }

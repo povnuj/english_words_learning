@@ -159,7 +159,7 @@ class CCard extends Random {
             LoginedUser.isValid(FirebaseTypes.Update, {posAnswer: ++this.wctx.words[i].posAnswer}, id);
         
             if(this.wctx.сards.find(el => el.id === id)!.progress >= 1){
-                this.wctx.setState!(WordsStatesType.FaworiteWords, id);
+                //this.wctx.setState!(WordsStatesType.FaworiteWords, id);///////////////////Do IT
             }
 
             this.ictx.setState!(UiStatesType.ChangeProgress, true);

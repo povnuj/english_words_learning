@@ -4,6 +4,7 @@ import { UiState } from "../../context/ui-context";
 import { UiStatesType } from "../../types/ListTypes";
 import { WordsState } from "../../context/words-context";
 import { WordsStatesType } from "../../types/ListTypes";
+import { List } from "../../services/words-services";
 import {
   IonButtons,
   IonButton,
@@ -18,12 +19,12 @@ import {
 function EditForm() {
   const ictx = useContext(UiState);
   const wctx = useContext(WordsState);
-
+  const Colection = new List(ictx, wctx);
   const inputEn = useRef<HTMLIonInputElement>(null);
   const inputTr = useRef<HTMLIonInputElement>(null);
 
   const closeModalHendler = () => {
-    ictx.setState!(UiStatesType.EditModal, false);
+    ictx.setState!(UiStatesType.OpenEditForm, false);
   };
 
   const setInputValue = (val: string) => {
@@ -39,7 +40,9 @@ function EditForm() {
     const en: string = inputEn.current!.value!.toString()!;
     const tr: string = inputTr.current!.value!.toString()!;
     if(en.trim() && tr.trim()) {
-      wctx.setState!(WordsStatesType.EditWords, {en, tr});
+      //wctx.setState!(WordsStatesType.EditWords, {en, tr});
+      Colection.editWord(en, tr);
+      
       closeModalHendler();
     }
   };

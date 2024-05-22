@@ -7,6 +7,7 @@ import  { IonApp, IonContent} from '@ionic/react';
 import ListMain from './list/ListMain';
 import LearningMain from "./learning/LearningMain";
 import CardFooter from "./learning/card/CardFooter";
+import ListFooter from "./list/ListFooter";
 
 const MainPage: React.FC = () => {
 
@@ -20,7 +21,7 @@ const MainPage: React.FC = () => {
                 <IonContent className={css.ion_padding}>
                     {!ictx.isOpenLerningPage ? <ListMain />:<LearningMain /> }
                 </IonContent>
-                {ictx.isOpenLerningPage ? <CardFooter />:''}
+                {ictx.isOpenLerningPage ? <CardFooter />: <ListFooter />}
             </WordsStateProvider>
         </IonApp>
 

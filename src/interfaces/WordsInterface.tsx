@@ -13,6 +13,8 @@ export interface WordsInterface {
     learning: boolean;
     posAnswer: number;
     negAnswer: number;
+    isChecked?: boolean;
+    category?: string;
 };
 
 export interface CardInterface {
@@ -34,6 +36,7 @@ export interface ActionInterface {
 export interface WordsStateInterface {
     words: WordsInterface[];
     сards: CardInterface[];
+    selectedItems: string[];
     editedWordsId: number;
     setState?: (type: string, newState: any ) => void;
 };

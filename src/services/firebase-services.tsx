@@ -43,7 +43,7 @@ export class Firebase{
         if(responseData){
             let arr = [];
             for (let key in responseData.words) {
-                arr.push({id: key, ...responseData.words[key]})
+                arr.push({id: key, isChecked: false, ...responseData.words[key]})
               }
             return arr.reverse();
         }

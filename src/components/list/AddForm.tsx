@@ -5,6 +5,7 @@ import { UiStatesType } from "../../types/ListTypes";
 import { WordsState } from "../../context/words-context";
 import { WordsStatesType } from "../../types/ListTypes";
 import { LoginedUser } from "../../services/user-servises"
+import { List } from "../../services/words-services";
 import {
   IonButtons,
   IonButton,
@@ -18,20 +19,22 @@ import {
 function AddForm() {
   const ictx = useContext(UiState);
   const wctx = useContext(WordsState);
-
+  const Colection = new List(ictx, wctx);
   const inputEn = useRef<HTMLIonInputElement>(null);
   const inputTr = useRef<HTMLIonInputElement>(null);
 
   const closeModalHendler = () => {
-    ictx.setState!(UiStatesType.AddModal, false);
+    ictx.setState!(UiStatesType.OpenAddForm, false);
   };
 
   const addNewWordHendler = () => {
     
     const en: string = inputEn.current!.value!.toString()!;
     const tr: string = inputTr.current!.value!.toString()!;
+    
     if(en.trim() && tr.trim()) {
-      wctx.setState!(WordsStatesType.AddNewWord, {en, tr});
+     // wctx.setState!(WordsStatesType.AddNewWord, {en, tr});
+      Colection.addWord(en, tr);
  
       closeModalHendler();
     }

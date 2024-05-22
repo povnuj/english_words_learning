@@ -13,6 +13,7 @@ const WordsState = createContext<WordsStateInterface>({
   words: [],
   editedWordsId: 11,
   сards: [],
+  selectedItems:[],
   setState: (type, newState) => {},
 });
 
@@ -22,12 +23,7 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
     switch (action.type) {
 
       case WordsStatesType.AddNewWord:
-        const word = new Word(new StringParser(action.newState.en).arr, 
-                              new StringParser(action.newState.tr).arr).wordObj;
-        if (LoginedUser){
-            LoginedUser.isValid(FirebaseTypes.Add, word);
-        }   
-        state.words.unshift(word);
+        state.words.unshift(action.newState);
         return {
           ...state,
         }
@@ -38,30 +34,22 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
           сards: action.newState
         }
 
-      case WordsStatesType.AddList:
+      case WordsStatesType.LoadListFromDB:
         return {
           ...state,
           words: action.newState 
         };
 
       case WordsStatesType.RemoveWord:
-        if (LoginedUser){
-          LoginedUser.isValid(FirebaseTypes.Remove, state.words[0], state.words[action.newState].id);
-        }   
         return {
           ...state,
-          words: state.words.filter((el, i) => i !== action.newState),
+          words:  action.newState,
         };
 
-      case WordsStatesType.FaworiteWords:
-        const i = typeof action.newState === "number"? action.newState : state.words.findIndex(el => el.id === action.newState)
-        const favorite = !state.words[i].learning;
-        if (LoginedUser){
-          LoginedUser.isValid(FirebaseTypes.Update, {learning: favorite, posAnswer: 1, negAnswer: 1}, state.words[i].id );
-        } 
-        state.words[i].learning = favorite;
-        state.words[i].posAnswer = 0;
-        state.words[i].negAnswer = 1;
+      case WordsStatesType.MarkWord:
+        state.words[action.newState].learning = !state.words[action.newState].learning;
+        state.words[action.newState].posAnswer = 0;
+        state.words[action.newState].negAnswer = 1;
         return {
           ...state,
         };
@@ -79,16 +67,8 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
         };
 
       case WordsStatesType.EditWords:
-          const obj = {
-            enWords: new StringParser(action.newState.en).arr, 
-            trWords: new StringParser(action.newState.tr).arr
-          };
-        if (LoginedUser){
-          LoginedUser.isValid(FirebaseTypes.Update, obj, state.words[state.editedWordsId].id);
-        } 
-
-        state.words[state.editedWordsId].enWords = obj.enWords;
-        state.words[state.editedWordsId].trWords = obj.trWords;
+        state.words[state.editedWordsId].enWords = action.newState.enWords;
+        state.words[state.editedWordsId].trWords = action.newState.trWords;
         return {
           ...state,
       };
@@ -104,6 +84,11 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
         return {
           ...state,
       };  
+      case WordsStatesType.SelectedItems:
+        state.words[action.newState].isChecked = !state.words[action.newState].isChecked;
+        return {
+          ...state,
+       }; 
 
       default:
         return state;
@@ -114,6 +99,7 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
     words: [],
     editedWordsId: 1,
     сards: [],
+    selectedItems:[],
     setState: (type, newState) => {
       dispatch({ type, newState });
     },

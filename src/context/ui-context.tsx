@@ -25,13 +25,13 @@ const UiStateProvider:React.FC<PropsProviderInterface> = (props) =>{
     const setStateHandler = (state: UiStateInterface, action: ActionInterface) =>{
         switch (action.type) {
             
-            case UiStatesType.AddModal:
+            case UiStatesType.OpenAddForm:
                 return {
                     ...state,
-                    [action.type]: (action.newState)
+                    isOpenAddForm: (action.newState)
                 };
             
-            case UiStatesType.EditModal:
+            case UiStatesType.OpenEditForm:
                 return {
                     ...state,
                     [action.type]: (action.newState)

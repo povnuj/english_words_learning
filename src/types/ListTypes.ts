@@ -1,6 +1,6 @@
 export enum UiStatesType{
-    AddModal = "isOpenAddForm",
-    EditModal = "isOpenEditForm",
+    OpenAddForm = "isOpenAddForm",
+    OpenEditForm = "isOpenEditForm",
     openLearningPage = "isOpenLerningPage",
     AddNewWords = "words",
     CardColor = "CardColor",
@@ -8,8 +8,8 @@ export enum UiStatesType{
     ChangeProgress = "ChangeProgress",
 };
 
-export enum WordsStatesType{
-    AddList = "Load",
+export enum WordsStatesType{ 
+    LoadListFromDB = "LoadListFromDB",
     AddCards = "AddCards",
     AddFavoriteList = "AddFavoriteList",
     AddNewWord = "Add",
@@ -17,9 +17,10 @@ export enum WordsStatesType{
     EditWords = "Edit",
     SaveEditedId = "SaveEditedId",
     FilterWords = "Filter",
-    FaworiteWords = "Faworite",
+    MarkWord = "MarkWord",
     Answer= "Answer",
     StudiedWords = "StudiedWords",
+    SelectedItems = "SelectedItems",
 };
 
 export enum FirebaseTypes{
