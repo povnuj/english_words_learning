@@ -8,11 +8,11 @@ const NavBar: React.FC = () => {
   
 
   const clickWordsPageHandler = () =>  {
-    ictx.setState!(UiStatesType.openLearningPage, false);
+    ictx.setState!(UiStatesType.OpenLearningPage, false);
   };
 
   const clickLearningPageHandler = () =>  {
-    ictx.setState!(UiStatesType.openLearningPage, true);
+    ictx.setState!(UiStatesType.OpenLearningPage, true);
   };
 
   return(

@@ -156,10 +156,10 @@ class CCard extends Random {
         if (LoginedUser){
 
             const i =  this.wctx.words.findIndex(el => el.id ===  id)
-            LoginedUser.isValid(FirebaseTypes.Update, {posAnswer: ++this.wctx.words[i].posAnswer}, id);
+            // LoginedUser.isValid(this.wctx.category.selected, FirebaseTypes.Update, {posAnswer: ++this.wctx.words[i].posAnswer}, id);
         
             if(this.wctx.сards.find(el => el.id === id)!.progress >= 1){
-                this.wctx.setState!(WordsStatesType.FaworiteWords, id);
+                //this.wctx.setState!(WordsStatesType.FaworiteWords, id);///////////////////Do IT
             }
 
             this.ictx.setState!(UiStatesType.ChangeProgress, true);
@@ -169,7 +169,7 @@ class CCard extends Random {
         if (LoginedUser){
 
             const i =  this.wctx.words.findIndex(el => el.id ===  id)
-            LoginedUser.isValid(FirebaseTypes.Update, {negAnswer: ++this.wctx.words[i].negAnswer}, id);
+            // LoginedUser.isValid(this.wctx.category.selected, FirebaseTypes.Update, {negAnswer: ++this.wctx.words[i].negAnswer}, id);
 
             this.ictx.setState!(UiStatesType.CardColor, false);
             this.ictx.setState!(UiStatesType.ChangeProgress, true);

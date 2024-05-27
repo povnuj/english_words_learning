@@ -7,10 +7,15 @@
 }
 
 .search_bar{
-    max-width: 80%;
+    max-width: 60%;
     padding-left: 0;
 }
-.btn{
-    height: 35px;
-    font-weight: 700;
+
+.category{
+    max-width: 20%;
+    height: 35px; 
+    text-transform: capitalize;
+}
+.category_list{
+    text-transform: capitalize;
 }

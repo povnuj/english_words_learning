@@ -1,60 +1,50 @@
-import React, { useContext} from "react";
+import React, { useContext, useEffect, MouseEvent , useCallback, useState,useDeferredValue} from "react";
 import css from './ListWords.module.css';
-import { IonItem, IonLabel, IonList, IonButton, IonFab, IonFabButton, IonFabList, IonIcon} from '@ionic/react';
-import { ellipsisVerticalOutline, bookmark, settingsSharp, trash, sadOutline } from 'ionicons/icons';
+import { IonItem, IonLabel, IonList, IonCheckbox, IonIcon} from '@ionic/react';
+import { sadOutline } from 'ionicons/icons';
 import { WordsState} from "../../context/words-context";
 import { UiState } from "../../context/ui-context";
-import { WordsStatesType, UiStatesType } from "../../types/ListTypes";
+import { UiStatesType, WordsStatesType } from "../../types/ListTypes";
+import { List } from "../../services/words-services";
+import AddForm from "./AddForm";
 import EditForm from "./EditForm";
-
+import ChangeCategoryForm from "./ChangeCategoryForm";
 
 const ListWords: React.FC = () => {
-  const wctx =  useContext(WordsState);
-  const ictx =  useContext(UiState);
+  const wctx = useContext(WordsState);
+  const ictx = useContext(UiState);
+  const Colection = new List(ictx, wctx);
 
-  const removeHandler = (index: number) =>{
-    wctx.setState!(WordsStatesType.RemoveWord, index);
-  };
-
-  const favoriteHandler = (index: number) =>{
-    wctx.setState!(WordsStatesType.FaworiteWords, index);
-  };
-
-  const editHandler = (index: number) =>{
-    ictx.setState!(UiStatesType.EditModal, true);
-    wctx.setState!(WordsStatesType.SaveEditedId, index);
-  };
+  useEffect(()=>{
+  },[ ])
   
+  useEffect(()=>{
+    Colection.loadListFromDB();
+
+  },[])
+
+
+  const selectItem = (index: number, e: MouseEvent) =>{
+    e.preventDefault();
+    Colection.selectItem(index)
+  }
+
   return (
     <>
       <EditForm />
+      <AddForm />
+      <ChangeCategoryForm />
       <IonList lines="full" className={`${css.wraper} wraper`}  >
       {wctx.words.map((word, index)  =>
-        <IonItem key={+Math.random() * 10000 + Math.random() * 10000}>
-          <IonLabel className={css.list}>
-            <div className={css.col_en}>{word.enWords}</div>
-            <div className={css.col_tr}>{word.trWords.map(trWord => 
-                <div key={+Math.random() * 10000 + Math.random() * 10000}>{trWord}</div>)}
-            </div>
-            <div className={css.button_container}>
-              <IonFab className={css.fab}>
-                <IonFabButton size="small" className={css.fab_btn} color={"light"}>
-                  <IonIcon icon={ellipsisVerticalOutline} color={word.learning?"primary":""}></IonIcon>
-                </IonFabButton >
-                <IonFabList side="start" className={css.fab_list}>
-                  <IonFabButton onClick={favoriteHandler.bind(null, index)}>
-                    <IonIcon icon={bookmark} color={word.learning?"primary":"dark"}></IonIcon>
-                  </IonFabButton>
-                  <IonFabButton onClick={editHandler.bind(null, index)}>
-                    <IonIcon icon={settingsSharp}></IonIcon>
-                  </IonFabButton>
-                  <IonFabButton onClick={removeHandler.bind(null, index)}>
-                    <IonIcon icon={trash}></IonIcon>
-                  </IonFabButton>
-                </IonFabList>
-              </IonFab>
-            </div>
-          </IonLabel>
+        <IonItem key={word.id} button onClick={selectItem.bind(null, index!)}>
+          <IonCheckbox id={word.id} justify="start" labelPlacement="end" slot="start" checked={word.isChecked}> </IonCheckbox >
+            <IonLabel className={css.list} color={word.learning?"primary": "dark"} >
+              <div className={css.col_en} slot="start">{word.enWords}</div>
+              <div className={css.col_tr} slot="end">{word.trWords.map((trWord, i, arr) => 
+                  <div key={trWord}>{trWord}{arr.length > 1 ?" | ":""}</div>)}
+              </div>
+            </IonLabel>
+            
         </IonItem>)} 
 
         { wctx.words.length === 0 ?

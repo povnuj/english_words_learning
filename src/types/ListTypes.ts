@@ -1,31 +1,45 @@
 export enum UiStatesType{
-    AddModal = "isOpenAddForm",
-    EditModal = "isOpenEditForm",
-    openLearningPage = "isOpenLerningPage",
+    OpenAddForm = "isOpenAddForm",
+    OpenEditForm = "isOpenEditForm",
+    OpenCategoryForm = "isOpenCategoryForm",
+    OpenForm = "OpenForm",
+    OpenLearningPage = "isOpenLerningPage",
     AddNewWords = "words",
     CardColor = "CardColor",
     CardFilter = "CardFilter",
     ChangeProgress = "ChangeProgress",
+    IsCanUseButton = "IsCanUseButton",
+    CreateUser = "CreateUser",
+    ThrowError = "ThrowError",
+    IsLogined = "IsLogined",
+    IsSignUp = "IsSinUp",
+    
 };
 
-export enum WordsStatesType{
-    AddList = "Load",
+export enum WordsStatesType{ 
+    LoadListFromDB = "LoadListFromDB",
     AddCards = "AddCards",
-    AddFavoriteList = "AddFavoriteList",
-    AddNewWord = "Add",
+    AddWord = "AddWord",
     RemoveWord = "Del",
     EditWords = "Edit",
     SaveEditedId = "SaveEditedId",
     FilterWords = "Filter",
-    FaworiteWords = "Faworite",
+    MarkWord = "MarkWord",
     Answer= "Answer",
     StudiedWords = "StudiedWords",
+    SelectedItems = "SelectedItems",
+    SaveLoadedCategory = "SaveLoadedCategory",
 };
 
 export enum FirebaseTypes{
     Add = "POST",
     Remove = "DELETE",
     Update = "PATCH",
+    LoadCategoryList = "LoadCategoryList",
+    UpdateCategory = "UpdateCategory",
+    SingUp = "SingUp",
+    SingIn = "SingIn",
+    CreateCategory = "CreateCategory",
 }
 export enum CardFilterTypes{
     Marked = "Marked",

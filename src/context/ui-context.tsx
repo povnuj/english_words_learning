@@ -1,14 +1,28 @@
 import React, { createContext, useReducer } from 'react';
 import { UiStateInterface, PropsProviderInterface, ActionInterface } from '../interfaces/WordsInterface';
 import { UiStatesType } from '../types/ListTypes';
+import { NewUser } from '../services/user-servises';
+import { error } from 'console';
 
 const UiState = createContext<UiStateInterface>({
-    isOpenAddForm: false,
-    isOpenEditForm: false,
     isOpenLerningPage: false,
     cardColor: true,
     progressChange: false,
     studiedWord: false,
+    isLogin: false,
+    isSignUp: false,
+    error: '',
+    listStates:{
+        isOpenAddForm: false,
+        isOpenEditForm: false,
+        isAddFormWords: false,
+        isEditedWord: false,
+        disableEdit: true,
+        disableRemove: true,
+        disableMark: true,
+        isOpenChangeCategoryForm: false,
+        isOpenSetingsMenu: false,
+    },
     cardFilter: {
         marked: true,
         all: false,
@@ -25,19 +39,19 @@ const UiStateProvider:React.FC<PropsProviderInterface> = (props) =>{
     const setStateHandler = (state: UiStateInterface, action: ActionInterface) =>{
         switch (action.type) {
             
-            case UiStatesType.AddModal:
+            case UiStatesType.OpenAddForm:
                 return {
                     ...state,
-                    [action.type]: (action.newState)
+                    listStates: {...state.listStates, isOpenAddForm: !state.listStates.isOpenAddForm}
                 };
             
-            case UiStatesType.EditModal:
+            case UiStatesType.OpenEditForm:
                 return {
                     ...state,
-                    [action.type]: (action.newState)
+                    listStates: {...state.listStates, isOpenEditForm: !state.listStates.isOpenEditForm}
                 };
             
-            case UiStatesType.openLearningPage:
+            case UiStatesType.OpenLearningPage:
                 return {
                     ...state,
                     isOpenLerningPage: action.newState
@@ -60,7 +74,47 @@ const UiStateProvider:React.FC<PropsProviderInterface> = (props) =>{
                     ...state,
                     progressChange: !state.progressChange,
                 };
+            
+            case UiStatesType.IsCanUseButton:
+                
+                return {
+                    ...state,
+                    listStates: {...state.listStates, ...action.newState},
+                };
 
+
+            case UiStatesType.OpenCategoryForm:
+            
+            return {
+                ...state,
+                listStates: {...state.listStates, ...action.newState},
+            };
+
+            case UiStatesType.OpenForm:
+            
+            return {
+                ...state,
+                listStates: {...state.listStates, ...action.newState},
+            };
+            
+
+            case UiStatesType.ThrowError:
+            return {
+                ...state,
+                error: action.newState,
+            };
+
+            case UiStatesType.IsLogined:
+                return {
+                    ...state,
+                    isLogin: action.newState,
+            };
+
+            case UiStatesType.IsSignUp:
+                return {
+                    ...state,
+                    isSignUp: action.newState,
+            };
 
             default:
             return state;
@@ -70,12 +124,24 @@ const UiStateProvider:React.FC<PropsProviderInterface> = (props) =>{
     };
     
     let initialState: UiStateInterface = {
-        isOpenAddForm: false,
-        isOpenEditForm: false,
         isOpenLerningPage: false,
         cardColor: true,
         progressChange: false,
         studiedWord: false,
+        isLogin: false,
+        isSignUp: false,
+        error: '',
+        listStates:{
+            isOpenAddForm: false,
+            isOpenEditForm: false,
+            isAddFormWords: false,
+            isEditedWord: false,
+            disableEdit: true,
+            disableRemove: true,
+            disableMark: true,
+            isOpenChangeCategoryForm: false,
+            isOpenSetingsMenu: false,
+        },
         cardFilter: {
             marked: true,
             all: false,
