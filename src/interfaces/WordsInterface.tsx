@@ -38,16 +38,33 @@ export interface WordsStateInterface {
     сards: CardInterface[];
     selectedItems: string[];
     editedWordsId: number;
+    isRefresh: number,
+    category:{
+        list: string[],
+        selected: string
+    }
     setState?: (type: string, newState: any ) => void;
 };
 
 export interface UiStateInterface {
-    isOpenAddForm: boolean;
-    isOpenEditForm: boolean;
     isOpenLerningPage: boolean;
     cardColor: boolean;
     progressChange: boolean;
     studiedWord: boolean,
+    isLogin: boolean,
+    isSignUp: boolean,
+    error: string,
+    listStates:{
+        isOpenAddForm: boolean,
+        isOpenEditForm: boolean,
+        isAddFormWords: boolean,
+        isEditedWord: boolean,
+        disableEdit: boolean,
+        disableRemove: boolean,
+        disableMark: boolean,
+        isOpenChangeCategoryForm: boolean,
+        isOpenSetingsMenu: boolean,
+    };
     cardFilter: {
         marked: boolean,
         all: boolean,

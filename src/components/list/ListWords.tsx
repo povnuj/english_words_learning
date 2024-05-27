@@ -1,69 +1,50 @@
-import React, { useContext, useEffect, MouseEvent ,useRef, useState, useMemo, useCallback} from "react";
+import React, { useContext, useEffect, MouseEvent , useCallback, useState,useDeferredValue} from "react";
 import css from './ListWords.module.css';
-import { IonItem, IonLabel, IonList, IonCheckbox, IonFab, IonFabButton, IonFabList, IonIcon} from '@ionic/react';
-import { ellipsisVerticalOutline, bookmark, settingsSharp, trash, sadOutline } from 'ionicons/icons';
+import { IonItem, IonLabel, IonList, IonCheckbox, IonIcon} from '@ionic/react';
+import { sadOutline } from 'ionicons/icons';
 import { WordsState} from "../../context/words-context";
 import { UiState } from "../../context/ui-context";
-import { WordsStatesType, UiStatesType } from "../../types/ListTypes";
+import { UiStatesType, WordsStatesType } from "../../types/ListTypes";
 import { List } from "../../services/words-services";
+import AddForm from "./AddForm";
 import EditForm from "./EditForm";
-
+import ChangeCategoryForm from "./ChangeCategoryForm";
 
 const ListWords: React.FC = () => {
-  const wctx =  useContext(WordsState);
-  const ictx =  useContext(UiState);
+  const wctx = useContext(WordsState);
+  const ictx = useContext(UiState);
   const Colection = new List(ictx, wctx);
-  //let checked: any  = useRef();
-    useEffect(()=>{
-      Colection.loadListFromDB();
-    },[])
-    useEffect(()=>{
-      //Colection.loadListFromDB();
-      //console.log(window.scrollX)
-    },[])
 
-  const removeHandler = (index: number) =>{
-    //wctx.setState!(WordsStatesType.RemoveWord, index);
-    //Colection.removeWord();
-  };
+  useEffect(()=>{
+  },[ ])
+  
+  useEffect(()=>{
+    Colection.loadListFromDB();
 
-  const markHandler = (index: number) =>{
-    //wctx.setState!(WordsStatesType.FaworiteWords, index);
-    //Colection.markWord();
-  };
+  },[])
 
-  const editHandler = (index: number) =>{
-    // ictx.setState!(UiStatesType.EditModal, true);
-    // wctx.setState!(WordsStatesType.SaveEditedId, index);
-    ictx.setState!(UiStatesType.OpenEditForm, true);
-    wctx.setState!(WordsStatesType.SaveEditedId, index);
-  };
-  const isChecked = (id:string) =>{
-    console.log("is",id);
-    return false;
+
+  const selectItem = (index: number, e: MouseEvent) =>{
+    e.preventDefault();
+    Colection.selectItem(index)
   }
-  function selectItem (id: string){
-    
-    Colection.selectItem(id);
-   //wctx.words.findIndex(el => el.id === id)
-   //wctx.setState!(WordsStatesType.SelectedItems, wctx.words.findIndex(el => el.id === id));
-   
-    //setch(true)
-  }
+
   return (
     <>
       <EditForm />
+      <AddForm />
+      <ChangeCategoryForm />
       <IonList lines="full" className={`${css.wraper} wraper`}  >
       {wctx.words.map((word, index)  =>
-        <IonItem key={+Math.random() * 10000 + Math.random() * 10000} button onClick={selectItem.bind(null, word.id!)}>
-          <IonCheckbox key={+Math.random() * 10000 + Math.random() * 10000}  id={word.id} justify="start" labelPlacement="end" slot="start" checked={word.isChecked}>
-            <IonLabel key={+Math.random() * 10000 + Math.random() * 10000} className={css.list} color={word.learning?"primary": "dark"} >
+        <IonItem key={word.id} button onClick={selectItem.bind(null, index!)}>
+          <IonCheckbox id={word.id} justify="start" labelPlacement="end" slot="start" checked={word.isChecked}> </IonCheckbox >
+            <IonLabel className={css.list} color={word.learning?"primary": "dark"} >
               <div className={css.col_en} slot="start">{word.enWords}</div>
-              <div className={css.col_tr} slot="end">{word.trWords.map(trWord => 
-                  <div key={+Math.random() * 10000 + Math.random() * 10000}>{trWord}</div>)}
+              <div className={css.col_tr} slot="end">{word.trWords.map((trWord, i, arr) => 
+                  <div key={trWord}>{trWord}{arr.length > 1 ?" | ":""}</div>)}
               </div>
             </IonLabel>
-            </IonCheckbox >
+            
         </IonItem>)} 
 
         { wctx.words.length === 0 ?

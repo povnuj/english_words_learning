@@ -49,7 +49,7 @@ function EditForm() {
 
 
   return (
-    <IonModal isOpen={ictx.isOpenEditForm}  backdropDismiss={false} color="light">
+    <IonModal isOpen={ictx.listStates.isOpenEditForm}  backdropDismiss={false} color="light">
       <IonHeader>
         <IonToolbar color="light">
           <IonButtons slot="start" onClick={closeModalHendler}>

@@ -1,11 +1,11 @@
 .list{
     display: flex !important;
-     width: 70vh;
-    /* max-width: 800px; */
+    width: 100%;
+    max-width: 800px;
     flex-direction: row;
-    column-gap: 40px;
+    column-gap: 80px;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 .col_tr, .col_en{
     text-transform: capitalize;
@@ -17,7 +17,9 @@
     column-gap: 20px;
     row-gap: 5px;
 }
-
+.col_en{
+    margin-left: 50px;
+}
 .wraper{
     /* margin-top: 50px; */
     --ion-background-color: #fff;
@@ -70,5 +72,19 @@ padding-right: 5px;
 }
 ion-checkbox {
     width: 100%;
-    /* max-width: 50px; */
+    max-width: 50px;
+  }
+
+  @media screen and (max-width: 991px) {
+    .list{
+        column-gap: 20px;
+        max-width: 300px;
+    }
+    .col_en{
+        margin-left: 0;
+    }
+    ion-checkbox {
+        width: 100%;
+        max-width: 30px;
+      }
   }

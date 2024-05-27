@@ -4,9 +4,7 @@ import {
   PropsProviderInterface,
   ActionInterface,
 } from "../interfaces/WordsInterface";
-import { WordsStatesType, FirebaseTypes } from "../types/ListTypes";
-import { Word, StringParser } from "../services/words-services";
-import { LoginedUser } from "../services/user-servises";
+import { WordsStatesType } from "../types/ListTypes";
 
 
 const WordsState = createContext<WordsStateInterface>({
@@ -14,6 +12,11 @@ const WordsState = createContext<WordsStateInterface>({
   editedWordsId: 11,
   сards: [],
   selectedItems:[],
+  isRefresh: 0,
+  category:{
+    list: [],
+    selected: ''
+  },
   setState: (type, newState) => {},
 });
 
@@ -22,22 +25,24 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
 
     switch (action.type) {
 
-      case WordsStatesType.AddNewWord:
-        state.words.unshift(action.newState);
+      case WordsStatesType.AddWord:
+        // state.words.unshift(action.newState);
         return {
           ...state,
+          words: action.newState
         }
 
       case WordsStatesType.AddCards:
         return {
           ...state,
-          сards: action.newState
+          сards: action.newState,
         }
 
       case WordsStatesType.LoadListFromDB:
         return {
           ...state,
-          words: action.newState 
+          words: action.newState,
+          isRefresh: (state.isRefresh+1)
         };
 
       case WordsStatesType.RemoveWord:
@@ -47,11 +52,9 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
         };
 
       case WordsStatesType.MarkWord:
-        state.words[action.newState].learning = !state.words[action.newState].learning;
-        state.words[action.newState].posAnswer = 0;
-        state.words[action.newState].negAnswer = 1;
         return {
           ...state,
+          word: action.newState
         };
 
       case WordsStatesType.SaveEditedId:
@@ -60,15 +63,10 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
           editedWordsId: action.newState,
         };
 
-      case WordsStatesType.AddFavoriteList:
-        return {
-          ...state,
-          favoriteWords: action.newState,
-        };
-
       case WordsStatesType.EditWords:
         state.words[state.editedWordsId].enWords = action.newState.enWords;
         state.words[state.editedWordsId].trWords = action.newState.trWords;
+        state.words[state.editedWordsId].isChecked = action.newState.isChecked;
         return {
           ...state,
       };
@@ -85,10 +83,20 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
           ...state,
       };  
       case WordsStatesType.SelectedItems:
-        state.words[action.newState].isChecked = !state.words[action.newState].isChecked;
+        //state.words[action.newState].isChecked = !state.words[action.newState].isChecked;
+        //console.log(action.newState)
         return {
           ...state,
+          words: action.newState,
        }; 
+      
+      case WordsStatesType.SaveLoadedCategory:
+       return {
+         ...state,
+         category: action.newState,
+      }; 
+
+       
 
       default:
         return state;
@@ -100,6 +108,11 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
     editedWordsId: 1,
     сards: [],
     selectedItems:[],
+    isRefresh: 0,
+    category:{
+      list: [],
+      selected: ''
+    },
     setState: (type, newState) => {
       dispatch({ type, newState });
     },

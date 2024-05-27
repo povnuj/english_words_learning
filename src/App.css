@@ -6,3 +6,6 @@
 .ion-padding{
     --ion-padding: 50px;
 }
+.alert-wrapper{
+    --background: #fff;
+}
