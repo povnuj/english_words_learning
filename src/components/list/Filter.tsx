@@ -18,19 +18,20 @@ const NewWord: React.FC = () => {
     return(
         <div className={`${css.title} wraper`} >
             <IonSearchbar  color={"light"} className={css.search_bar} mode={'ios'} inputmode={'search'} minlength={3} type={"text"}  onIonInput={filterHandler}></IonSearchbar>
-              <IonSelect 
-                className={css.category}
-                color={"light"}
-                aria-label="Category"
-                // fill="outline"
-                label="Category" labelPlacement="floating"
-                value={wctx.category.selected}
-                onIonChange={(e) => CurrentCategory.changeCategory(e.detail.value)}
-              >
-                {wctx.category.list.map(el => 
-                    <IonSelectOption key={el} className={css.category_list} value={el}>{el}</IonSelectOption>
-                )}
-              </IonSelect>
+            <div>{wctx.words.length}</div>
+            <IonSelect 
+              className={css.category}
+              color={"light"}
+              aria-label="Category"
+              // fill="outline"
+              label="Category" labelPlacement="floating"
+              value={wctx.category.selected}
+              onIonChange={(e) => CurrentCategory.changeCategory(e.detail.value)}
+            >
+              {wctx.category.list.map(el => 
+                  <IonSelectOption key={el} className={css.category_list} value={el}>{el}</IonSelectOption>
+              )}
+            </IonSelect>
         </div>
     );
 };

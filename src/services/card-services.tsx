@@ -2,7 +2,7 @@
 import { CardFilterTypes, UiStatesType, WordsStatesType, FirebaseTypes } from "../types/ListTypes";
 import { UiStateInterface, WordsStateInterface, WordsInterface, CardInterface} from '../interfaces/WordsInterface';
 import { LoginedUser } from "../services/user-servises";
-
+import { Firebase } from "./firebase-services";
 class CardFilter {
     action: CardFilterTypes;
     ictx: UiStateInterface;
@@ -82,6 +82,7 @@ class CCard extends Random {
     ictx: UiStateInterface;
     wctx: WordsStateInterface;
     result: CardInterface[];
+    FireBase = new Firebase();
 
     constructor(ictx: UiStateInterface, wctx: WordsStateInterface){
         super();
@@ -156,10 +157,14 @@ class CCard extends Random {
         if (LoginedUser){
 
             const i =  this.wctx.words.findIndex(el => el.id ===  id)
-            // LoginedUser.isValid(this.wctx.category.selected, FirebaseTypes.Update, {posAnswer: ++this.wctx.words[i].posAnswer}, id);
+            this.FireBase.storage(this.wctx.category.selected, FirebaseTypes.Update, {posAnswer: ++this.wctx.words[i].posAnswer}, id);
         
             if(this.wctx.сards.find(el => el.id === id)!.progress >= 1){
-                //this.wctx.setState!(WordsStatesType.FaworiteWords, id);///////////////////Do IT
+                const arr = this.wctx.words;
+                arr[i].learning = false;
+                arr[i].posAnswer = 0;
+                arr[i].negAnswer = 1;
+                this.wctx.setState!(WordsStatesType.MarkWord, arr);///////////////////Do IT
             }
 
             this.ictx.setState!(UiStatesType.ChangeProgress, true);

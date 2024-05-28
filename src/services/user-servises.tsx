@@ -11,7 +11,7 @@ class Login{
         return true ? ()=>{} : false;
       }
      async singUp(email: string, password: string, ictx: UiStateInterface){
-         const result  = await new Firebase().storage('', '', FirebaseTypes.SingUp, {email, password, returnSecureToken: true });
+         const result  = await new Firebase().storage( '', FirebaseTypes.SingUp, {email, password, returnSecureToken: true });
          if(result.status !== 200){
             return result
          }
@@ -26,7 +26,7 @@ class User{
         this.email = '';
     }
     async SingUp(email: string, password: string){
-        const response = await new Firebase().storage('', '', FirebaseTypes.SingUp, {email, password, returnSecureToken: true })
+        const response = await new Firebase().storage( '', FirebaseTypes.SingUp, {email, password, returnSecureToken: true })
         if(response.hasOwnProperty("error"))return response;
         
         sessionStorage.setItem('email', response.email);
@@ -35,7 +35,7 @@ class User{
         sessionStorage.setItem('exp_time', (Date.now() + 3600000).toString());
     }
     async SingIn(email: string, password: string){
-        const response = await new Firebase().storage('', '', FirebaseTypes.SingIn, {email, password, returnSecureToken: true })
+        const response = await new Firebase().storage( '', FirebaseTypes.SingIn, {email, password, returnSecureToken: true })
         if(response.hasOwnProperty("error"))return response;
         
         sessionStorage.setItem('email', response.email);

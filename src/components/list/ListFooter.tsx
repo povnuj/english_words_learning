@@ -1,12 +1,10 @@
-import React, {useContext, useCallback,useMemo} from 'react';
+import React, {useContext} from 'react';
 import { IonFooter, IonToolbar,IonIcon, IonButtons, IonButton,IonPopover,IonContent, IonList, IonItem} from '@ionic/react';
-import { bookmark, trash, settingsSharp, repeat, eye, create, add } from 'ionicons/icons';
-// import { CardFilterTypes } from '../../../types/ListTypes';
+import { bookmark, trash, settingsSharp, create, add } from 'ionicons/icons';
 import { UiStatesType, WordsStatesType } from '../../types/ListTypes';
 import { UiState } from '../../context/ui-context';
 import { WordsState } from '../../context/words-context';
 import css from "./ListFooter.module.css"
-// import {CardFilter} from '../../../services/card-services';
 import { List } from "../../services/words-services";
 
 function ListFooter() {
@@ -47,9 +45,9 @@ function ListFooter() {
             <IonButton shape="round"  onClick={editHandler} disabled={ictx.listStates.disableEdit}>
                 <IonIcon slot="icon-only" icon={create} color={"dark"}></IonIcon>
             </IonButton>
-            <IonButton shape="round"  id="open-popover">
+            <IonButton shape="round"  id="open-popover" >
             <IonContent>
-               <IonPopover keepContentsMounted={true} trigger="open-popover" onDidDismiss={() => "ictx.setState!(UiStatesType.ThrowError, '')"}>
+               <IonPopover isOpen={ictx.listStates.isOpenSetingsMenu} keepContentsMounted={true} trigger="open-popover" dismissOnSelect={true}>
                 <IonButton fill="clear" expand='full' color={'light'} disabled={ictx.listStates.disableMark} onClick={categoryHandler}>Change category</IonButton>
                 <IonButton fill="clear" expand='full' color={'light'} >Copy category from the library</IonButton>
                </IonPopover>
