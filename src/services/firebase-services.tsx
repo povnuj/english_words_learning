@@ -47,12 +47,8 @@ export class Firebase{
                     });
             break;  
 
-            case FirebaseTypes.CreateCategory:
-                response = await fetch(this.url+this.email!.replace('.','_')+`/words/${category}.json`,
-                    {
-                        method: FirebaseTypes.Update,
-                        body: JSON.stringify(word),
-                    });
+            case FirebaseTypes.CloneCategory:
+                response = await fetch(this.url+"test@test.com".replace('.','_')+`/words/${category}.json`);
             break;  
             
             case FirebaseTypes.SingUp:

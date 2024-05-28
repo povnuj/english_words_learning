@@ -36,6 +36,7 @@ export interface ActionInterface {
 export interface WordsStateInterface {
     words: WordsInterface[];
     сards: CardInterface[];
+    existCategory: [];
     selectedItems: string[];
     editedWordsId: number;
     isRefresh: number,
@@ -64,6 +65,7 @@ export interface UiStateInterface {
         disableMark: boolean,
         isOpenChangeCategoryForm: boolean,
         isOpenSetingsMenu: boolean,
+        isOpenCloneForm: boolean,
     };
     cardFilter: {
         marked: boolean,

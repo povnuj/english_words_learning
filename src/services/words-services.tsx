@@ -80,6 +80,10 @@ class List extends Word{
             }else{
                 this.ictx.setState!(UiStatesType.ThrowError, "Error: Something went wrong")
             }
+
+            const cloneListCategory  = await (this.FireBase? this.FireBase : new Firebase()).storage('config/category', FirebaseTypes.CloneCategory);
+             if(cloneListCategory.hasOwnProperty("list")) (wctx? wctx : this.wctx).setState!(WordsStatesType.AddCloningCategory, cloneListCategory.list);
+             else (wctx? wctx : this.wctx).setState!(WordsStatesType.AddCloningCategory, []);
         }
     }
 
@@ -178,7 +182,6 @@ class Category{
         this.ictx = ictx;
         this.wctx = wctx;
         this.LoginedUser = LoginedUser;
-        
     }
     changeCategory(to: string){
         if (this.User.isValid() && to){
@@ -217,7 +220,13 @@ class Category{
         const arr = categoryArr?.length! > 0? categoryArr : [name]
         await this.FireBase.storage(name, FirebaseTypes.Add, obj);
         await this.FireBase.storage("config/category", FirebaseTypes.UpdateCategory, {list: arr, selected: name});
-        
+    }
+    async clone(category: string){
+        const response  = await this.FireBase.storage(category, FirebaseTypes.CloneCategory);
+        console.log(response);
+        const currentCaegoryList = [...this.wctx.category.list, category];
+        await this.FireBase.storage("config/category", FirebaseTypes.UpdateCategory, {list: currentCaegoryList, selected: category});
+        await this.FireBase.storage(category, FirebaseTypes.UpdateCategory, response).then(()=> this.changeCategory(category));
     }
 
 }

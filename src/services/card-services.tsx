@@ -92,15 +92,20 @@ class CCard extends Random {
     }
 
     card(word: WordsInterface){
+        const trueWord = {
+            en: word.enWords[0],
+            tr: word.trWords[this.randomNumber(word.trWords.length)]
+        } 
         const obj: CardInterface = {
             id: word.id!, 
-            en: word.enWords[0],
-            tr: word.trWords[this.randomNumber(word.trWords.length)],
+            en: trueWord.en,
+            tr: trueWord.tr,
             randomBtnPosition: this.randomNumber(100),
             falseEn: this.randomAnswer(this.wctx.words, true, word.id!),
             falseTr: this.randomAnswer(this.wctx.words, false, word.id!),
             progress: word.posAnswer / (word.negAnswer *8)
         }
+     
         return obj;
     }
 
@@ -174,7 +179,7 @@ class CCard extends Random {
         if (LoginedUser){
 
             const i =  this.wctx.words.findIndex(el => el.id ===  id)
-            // LoginedUser.isValid(this.wctx.category.selected, FirebaseTypes.Update, {negAnswer: ++this.wctx.words[i].negAnswer}, id);
+            this.FireBase.storage(this.wctx.category.selected, FirebaseTypes.Update, {negAnswer: ++this.wctx.words[i].negAnswer}, id);
 
             this.ictx.setState!(UiStatesType.CardColor, false);
             this.ictx.setState!(UiStatesType.ChangeProgress, true);
