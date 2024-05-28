@@ -67,15 +67,7 @@ function ListFooter() {
                 </IonButton>
                </IonPopover>
             </IonContent>
-
-
-
-
-
                 <IonIcon slot="icon-only" icon={settingsSharp} color={"dark"}></IonIcon>
-
-
-
             </IonButton>
             <IonButton shape="round" onClick={removeHandler} disabled={ictx.listStates.disableRemove}>
                 <IonIcon slot="icon-only" icon={trash} color={"dark"} ></IonIcon>
