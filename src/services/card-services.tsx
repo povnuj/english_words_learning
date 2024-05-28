@@ -43,7 +43,7 @@ class CardFilter {
 
             case CardFilterTypes.Shuffle:
                 this.ictx.setState!(UiStatesType.CardFilter, {
-                  shuffle: !this.ictx.cardFilter.shuffle, 
+                  shuffle: true, 
               });
             break;
            default:
@@ -103,6 +103,8 @@ class CCard extends Random {
             randomBtnPosition: this.randomNumber(100),
             falseEn: this.randomAnswer(this.wctx.words, true, word.id!),
             falseTr: this.randomAnswer(this.wctx.words, false, word.id!),
+            posAnswer: 0,
+            negAnswer: 1,
             progress: word.posAnswer / (word.negAnswer *8)
         }
      
@@ -157,36 +159,36 @@ class CCard extends Random {
         }, 400);
     }
 
-    trueAnswer(id: string){
+    trueAnswer(id: number){
 
         if (LoginedUser){
-
-            const i =  this.wctx.words.findIndex(el => el.id ===  id)
-            this.FireBase.storage(this.wctx.category.selected, FirebaseTypes.Update, {posAnswer: ++this.wctx.words[i].posAnswer}, id);
-        
-            if(this.wctx.сards.find(el => el.id === id)!.progress >= 1){
-                const arr = this.wctx.words;
-                arr[i].learning = false;
-                arr[i].posAnswer = 0;
-                arr[i].negAnswer = 1;
-                this.wctx.setState!(WordsStatesType.MarkWord, arr);///////////////////Do IT
+            if(this.ictx.cardFilter.marked){
+                const arr = this.wctx.сards;
+                arr[id].posAnswer++;
+                arr[id].progress = arr[id].posAnswer / (arr[id].negAnswer * 8);
+                this.wctx.setState!(WordsStatesType.AddCards, arr);
+                
+                if(arr[id].progress >= 1){
+                    this.FireBase.storage(this.wctx.category.selected, FirebaseTypes.Update, {learning: false}, arr[id].id);
+                }
             }
-
-            this.ictx.setState!(UiStatesType.ChangeProgress, true);
         }
     }
-    falseAnswer(id: string){
+    falseAnswer(id: number){
+        
         if (LoginedUser){
+            if(this.ictx.cardFilter.marked){
+                const arr = this.wctx.сards;
+                arr[id].negAnswer++;
+                arr[id].progress = arr[id].posAnswer / (arr[id].negAnswer * 8);
+                this.wctx.setState!(WordsStatesType.AddCards, arr);
 
-            const i =  this.wctx.words.findIndex(el => el.id ===  id)
-            this.FireBase.storage(this.wctx.category.selected, FirebaseTypes.Update, {negAnswer: ++this.wctx.words[i].negAnswer}, id);
-
-            this.ictx.setState!(UiStatesType.CardColor, false);
-            this.ictx.setState!(UiStatesType.ChangeProgress, true);
-            let timer =  setTimeout(()=>{
-                this.ictx.setState!(UiStatesType.CardColor, true);
-                clearTimeout(timer);
-            }, 400);
+                this.ictx.setState!(UiStatesType.CardColor, false);
+                let timer =  setTimeout(()=>{
+                    this.ictx.setState!(UiStatesType.CardColor, true);
+                    clearTimeout(timer);
+                }, 400);
+            }
         }   
     }
 

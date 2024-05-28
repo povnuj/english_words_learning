@@ -25,6 +25,8 @@ export interface CardInterface {
     falseEn: string;
     falseTr: string;
     progress: number;
+    posAnswer: number;
+    negAnswer: number;
 }
 
 //context interfaces===============================
