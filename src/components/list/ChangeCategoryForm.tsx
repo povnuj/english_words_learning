@@ -46,7 +46,7 @@ function ChangeCategoryForm() {
   };
 
   return (
-    <IonModal className={css.modal} isOpen={ictx.listStates.isOpenChangeCategoryForm}  backdropDismiss={false} color="light">
+    <IonModal id="category-modal" className={css.modal} isOpen={ictx.listStates.isOpenChangeCategoryForm}  backdropDismiss={false} color="light">
       <IonHeader>
         <IonToolbar color="light">
           <IonButtons slot="start" onClick={closeModalHendler}>

@@ -9,3 +9,20 @@
 .alert-wrapper{
     --background: #fff;
 }
+@media screen and (min-width: 991px) {
+ion-modal#category-modal {
+    --max-height: 250px;
+    overflow: hidden!important;
+}
+
+ion-modal#add-modal {
+    --max-height: 350px;
+    overflow: hidden!important;
+}
+
+ion-modal#edit-modal {
+    --max-height: 350px;
+    overflow: hidden!important;
+}
+}
+

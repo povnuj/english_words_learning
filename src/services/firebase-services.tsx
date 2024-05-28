@@ -6,13 +6,14 @@ import { UiStatesType, WordsStatesType } from "../types/ListTypes";
 
 export class Firebase{
     private url = "https://wordslearning-255d7-default-rtdb.firebaseio.com/users/";
+    private email = sessionStorage.getItem('email');
     constructor(){
     }
-    async storage(email: string, category: string, type?: FirebaseTypes, word?: WordsInterface | {} | [], id?: string){
+    async storage(category: string, type?: FirebaseTypes, word?: WordsInterface | {} | [], id?: string){
         let response: Response;
         switch(type){
             case FirebaseTypes.Add:
-                response = await fetch(this.url+email.replace('.','_')+`/words/${category}.json`,
+                response = await fetch(this.url+this.email!.replace('.','_')+`/words/${category}.json`,
                     {
                         method: FirebaseTypes.Add,
                         body: JSON.stringify(word),
@@ -20,14 +21,14 @@ export class Firebase{
             break;
 
             case FirebaseTypes.Remove:
-                response = await fetch(this.url+email.replace('.','_')+`/words/${category}/${id}.json`,
+                response = await fetch(this.url+this.email!.replace('.','_')+`/words/${category}/${id}.json`,
                     {
                         method: FirebaseTypes.Remove,
                     });
             break;
 
             case FirebaseTypes.Update:
-                response = await fetch(this.url+email.replace('.','_')+`/words/${category}/${id}.json`,
+                response = await fetch(this.url+this.email!.replace('.','_')+`/words/${category}/${id}.json`,
                     {
                         method: FirebaseTypes.Update,
                         body: JSON.stringify(word),
@@ -35,11 +36,11 @@ export class Firebase{
             break;  
 
             case FirebaseTypes.LoadCategoryList:
-                response = await fetch(this.url+email.replace('.','_')+`/words.json`);
+                response = await fetch(this.url+this.email!.replace('.','_')+`/words.json`);
             break;  
 
             case FirebaseTypes.UpdateCategory:
-                response = await fetch(this.url+email.replace('.','_')+`/words/${category}.json`,
+                response = await fetch(this.url+this.email!.replace('.','_')+`/words/${category}.json`,
                     {
                         method: FirebaseTypes.Update,
                         body: JSON.stringify(word),
@@ -47,7 +48,7 @@ export class Firebase{
             break;  
 
             case FirebaseTypes.CreateCategory:
-                response = await fetch(this.url+email.replace('.','_')+`/words/${category}.json`,
+                response = await fetch(this.url+this.email!.replace('.','_')+`/words/${category}.json`,
                     {
                         method: FirebaseTypes.Update,
                         body: JSON.stringify(word),
@@ -71,7 +72,7 @@ export class Firebase{
             break;  
 
             default:
-                response = await fetch(this.url+email.replace('.','_')+`/words.json`);
+                response = await fetch(this.url+this.email!.replace('.','_')+`/words.json`);
         }
         if (!response!.ok) {
             return response.json();

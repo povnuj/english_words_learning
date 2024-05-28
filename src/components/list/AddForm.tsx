@@ -43,7 +43,7 @@ function AddForm() {
 
 
   return (
-    <IonModal isOpen={ictx.listStates.isOpenAddForm}  backdropDismiss={false} color="light">
+    <IonModal id="add-modal" isOpen={ictx.listStates.isOpenAddForm}  backdropDismiss={false} color="light">
       <IonHeader>
         <IonToolbar color="light">
           {/* <IonTitle>Add new</IonTitle> */}

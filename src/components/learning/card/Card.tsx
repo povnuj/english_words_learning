@@ -82,7 +82,7 @@ const Card = () => {
                         ) : (
                             !ictx.cardFilter.learningModePeekUp?(
                               <>
-                                <IonButton shape="round" color={"light"} fill="clear" className="card_eye_btn" onClick={peekUpHandler}>
+                                <IonButton  shape="round" color={"light"} fill="clear" className="card_eye_btn" onClick={peekUpHandler}>
                                   <IonIcon slot="icon-only" icon={eyeOutline} color={"dark"} ></IonIcon>
                                 </IonButton>
                                 

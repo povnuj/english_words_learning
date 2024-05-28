@@ -53,7 +53,6 @@ class List extends Word{
     list: WordsInterface[];
     User = new User();
     FireBase = new Firebase();
-    private email = sessionStorage.getItem('email');
 
     constructor(ictx: UiStateInterface, wctx: WordsStateInterface){
         super()
@@ -67,7 +66,7 @@ class List extends Word{
     async loadListFromDB(wctx?: WordsStateInterface, user?: boolean, email?: string){
         if((user? user : this.User.isValid())){
             
-            let response = await (this.FireBase? this.FireBase : new Firebase()).storage((email? email : this.email!), "", FirebaseTypes.LoadCategoryList);
+            let response = await (this.FireBase? this.FireBase : new Firebase()).storage( "", FirebaseTypes.LoadCategoryList);
             
             if (response.hasOwnProperty("config") ){
                 const category =  response.config.category;
@@ -88,7 +87,7 @@ class List extends Word{
         if (this.User.isValid()){
             this.wctx.words.forEach((el, index) => {
                 if(el.isChecked === true){
-                    this.FireBase.storage(this.email!, this.wctx.category.selected, FirebaseTypes.Remove, [], el.id);
+                    this.FireBase.storage( this.wctx.category.selected, FirebaseTypes.Remove, [], el.id);
                 }
             });
             this.wctx.setState!(WordsStatesType.RemoveWord, this.wctx.words.filter(el => el.isChecked !== true));
@@ -104,7 +103,7 @@ class List extends Word{
                     el.negAnswer = 1;
                     el.posAnswer = 0;
                     el.isChecked = !el.isChecked;
-                    this.FireBase.storage(this.email!, this.wctx.category.selected, FirebaseTypes.Update, {learning: el.learning, posAnswer: 0, negAnswer: 1}, el.id );
+                    this.FireBase.storage(this.wctx.category.selected, FirebaseTypes.Update, {learning: el.learning, posAnswer: 0, negAnswer: 1}, el.id );
                 }
             })
             this.wctx.setState!(WordsStatesType.MarkWord, arr);
@@ -120,7 +119,7 @@ class List extends Word{
                 isChecked: false,
             }
 
-            this.FireBase.storage(this.email!, this.wctx.category.selected, FirebaseTypes.Update, obj, this.wctx.words[this.wctx.editedWordsId].id); 
+            this.FireBase.storage(this.wctx.category.selected, FirebaseTypes.Update, obj, this.wctx.words[this.wctx.editedWordsId].id); 
 
             this.wctx.setState!(WordsStatesType.EditWords, obj );
             this.allowBtnListFooter(0);
@@ -130,7 +129,7 @@ class List extends Word{
     async addWord(en: string, tr: string){
         if (this.User.isValid()){
             const arr = this.generateFromSring(en, tr);
-            this.FireBase.storage(this.email!, this.wctx.category.selected, FirebaseTypes.Add, arr);
+            await this.FireBase.storage(this.wctx.category.selected, FirebaseTypes.Add, arr);
         } 
         await this.loadListFromDB();
         this.allowBtnListFooter(0)
@@ -154,7 +153,6 @@ class List extends Word{
 
          this.wctx.setState!(WordsStatesType.SelectedItems, arr);
          const filter = this.wctx.words.filter(el => el.isChecked)
-         console.log(filter.length)
          if(filter.length === 1) this.wctx.words.forEach((el, index) => {
             if(filter[0].id === el.id) this.wctx.setState!(WordsStatesType.SaveEditedId, index)
          });
@@ -174,7 +172,6 @@ class Category{
     wctx: WordsStateInterface;
     LoginedUser: any;
     FireBase = new Firebase();
-    private email = sessionStorage.getItem('email');
     User = new User();
 
     constructor(ictx: UiStateInterface, wctx: WordsStateInterface){
@@ -185,8 +182,8 @@ class Category{
     }
     changeCategory(to: string){
         if (this.User.isValid() && to){
-            this.FireBase.storage(this.email!, 'config/category/', FirebaseTypes.UpdateCategory, {selected: to}).then(()=>
-                 List.prototype.loadListFromDB(this.wctx, this.User.isValid(), this.email!) 
+            this.FireBase.storage('config/category/', FirebaseTypes.UpdateCategory, {selected: to}).then(()=>
+                 List.prototype.loadListFromDB(this.wctx, this.User.isValid()) 
             );
         }
     }
@@ -202,8 +199,8 @@ class Category{
                     posAnswer: word.posAnswer,
                     negAnswer: word.negAnswer,
                 };
-                this.FireBase.storage(this.email!, to, FirebaseTypes.Add, obj);
-                this.FireBase.storage(this.email!, this.wctx.category.selected, FirebaseTypes.Remove, [], word.id)
+                this.FireBase.storage(to, FirebaseTypes.Add, obj);
+                this.FireBase.storage(this.wctx.category.selected, FirebaseTypes.Remove, [], word.id)
             }
           });
         } 
@@ -218,8 +215,8 @@ class Category{
             negAnswer: 1,
         };
         const arr = categoryArr?.length! > 0? categoryArr : [name]
-        await this.FireBase.storage(this.email!, name, FirebaseTypes.Add, obj);
-        await this.FireBase.storage(this.email!, "config/category", FirebaseTypes.UpdateCategory, {list: arr, selected: name});
+        await this.FireBase.storage(name, FirebaseTypes.Add, obj);
+        await this.FireBase.storage("config/category", FirebaseTypes.UpdateCategory, {list: arr, selected: name});
         
     }
 

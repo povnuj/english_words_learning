@@ -68,8 +68,6 @@ const Auth: React.FC  = () => {
           if(NewUser.isValid() === true) ictx.setState!(UiStatesType.IsLogined, true);
           else ictx.setState!(UiStatesType.IsLogined, false);
       }
-
-
     };
 
     async function signUpHandler (){
