@@ -22,6 +22,7 @@ const UiState = createContext<UiStateInterface>({
         disableMark: true,
         isOpenChangeCategoryForm: false,
         isOpenSetingsMenu: false,
+        isOpenCloneForm: false,
     },
     cardFilter: {
         marked: true,
@@ -141,6 +142,7 @@ const UiStateProvider:React.FC<PropsProviderInterface> = (props) =>{
             disableMark: true,
             isOpenChangeCategoryForm: false,
             isOpenSetingsMenu: false,
+            isOpenCloneForm: false,
         },
         cardFilter: {
             marked: true,

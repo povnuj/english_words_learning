@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import { IonFooter, IonToolbar,IonIcon, IonButtons, IonButton,IonPopover,IonContent, IonList, IonItem} from '@ionic/react';
-import { bookmark, trash, settingsSharp, create, add } from 'ionicons/icons';
+import { bookmark, trash, logOutOutline, settingsSharp, create, add } from 'ionicons/icons';
 import { UiStatesType, WordsStatesType } from '../../types/ListTypes';
 import { UiState } from '../../context/ui-context';
 import { WordsState } from '../../context/words-context';
@@ -33,7 +33,19 @@ function ListFooter() {
     const categoryHandler = () => {
         ictx.setState!(UiStatesType.OpenForm, {isOpenChangeCategoryForm: true});
     };
+    const cloneHandler = () =>{ 
+        ictx.setState!(UiStatesType.OpenForm, {isOpenCloneForm: true});
+    };
    
+    const signOutHandler = () =>{
+        sessionStorage.removeItem("exp_time");
+        sessionStorage.removeItem("refreshToken");
+        sessionStorage.removeItem("email");
+        sessionStorage.removeItem("refreshToken");
+        ictx.setState!(UiStatesType.IsLogined, false);
+    };
+
+
   return (
     <>
       <IonFooter >
@@ -49,7 +61,10 @@ function ListFooter() {
             <IonContent>
                <IonPopover isOpen={ictx.listStates.isOpenSetingsMenu} keepContentsMounted={true} trigger="open-popover" dismissOnSelect={true}>
                 <IonButton fill="clear" expand='full' color={'light'} disabled={ictx.listStates.disableMark} onClick={categoryHandler}>Change category</IonButton>
-                <IonButton fill="clear" expand='full' color={'light'} >Copy category from the library</IonButton>
+                <IonButton fill="clear" expand='full' color={'light'} onClick={cloneHandler}>Copy category from the library</IonButton>
+                <IonButton fill="clear" expand='full' color={'light'} onClick={signOutHandler}>SignOut
+                <IonIcon slot="end" icon={logOutOutline} color={"light"}></IonIcon>
+                </IonButton>
                </IonPopover>
             </IonContent>
 

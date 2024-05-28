@@ -29,6 +29,7 @@ export enum WordsStatesType{
     StudiedWords = "StudiedWords",
     SelectedItems = "SelectedItems",
     SaveLoadedCategory = "SaveLoadedCategory",
+    AddCloningCategory = "AddCloningCategory",
 };
 
 export enum FirebaseTypes{
@@ -39,7 +40,7 @@ export enum FirebaseTypes{
     UpdateCategory = "UpdateCategory",
     SingUp = "SingUp",
     SingIn = "SingIn",
-    CreateCategory = "CreateCategory",
+    CloneCategory = "CloneCategory",
 }
 export enum CardFilterTypes{
     Marked = "Marked",

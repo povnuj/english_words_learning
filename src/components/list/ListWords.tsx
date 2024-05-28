@@ -9,6 +9,7 @@ import { List } from "../../services/words-services";
 import AddForm from "./AddForm";
 import EditForm from "./EditForm";
 import ChangeCategoryForm from "./ChangeCategoryForm";
+import CloneCategory from "./CloneCategory";
 
 const ListWords: React.FC = () => {
   const wctx = useContext(WordsState);
@@ -34,14 +35,15 @@ const ListWords: React.FC = () => {
       <EditForm />
       <AddForm />
       <ChangeCategoryForm />
+      <CloneCategory />
       <IonList lines="full" className={`${css.wraper} wraper`}  >
       {wctx.words.map((word, index)  =>
         <IonItem key={word.id} button onClick={selectItem.bind(null, index!)}>
           <IonCheckbox id={word.id} justify="start" labelPlacement="end" slot="start" checked={word.isChecked}> </IonCheckbox >
             <IonLabel className={css.list} color={word.learning?"primary": "dark"} >
-              <div className={css.col_en} slot="start">{word.enWords}</div>
+              <div className={css.col_en} slot="start">{word.enWords[0]}</div>
               <div className={css.col_tr} slot="end">{word.trWords.map((trWord, i, arr) => 
-                  <div key={trWord}>{trWord}{arr.length > 1 ?" | ":""}</div>)}
+                  <div key={trWord}>{trWord}{arr.length-1 !== i?",":""}</div>)}
               </div>
             </IonLabel>
             

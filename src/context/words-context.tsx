@@ -9,8 +9,9 @@ import { WordsStatesType } from "../types/ListTypes";
 
 const WordsState = createContext<WordsStateInterface>({
   words: [],
-  editedWordsId: 11,
   сards: [],
+  existCategory: [],
+  editedWordsId: 11,
   selectedItems:[],
   isRefresh: 0,
   category:{
@@ -96,6 +97,12 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
          category: action.newState,
       }; 
 
+      case WordsStatesType.AddCloningCategory:
+        return {
+          ...state,
+          existCategory: action.newState,
+      }; 
+
        
 
       default:
@@ -105,8 +112,9 @@ const WordsStateProvider: React.FC<PropsProviderInterface> = (props) => {
 
   let initialState: WordsStateInterface = {
     words: [],
-    editedWordsId: 1,
     сards: [],
+    existCategory: [],
+    editedWordsId: 1,
     selectedItems:[],
     isRefresh: 0,
     category:{
