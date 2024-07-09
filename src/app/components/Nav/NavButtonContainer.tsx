@@ -26,9 +26,9 @@ export default function NavButtonContainer() {
 
     return (
         <MNavButtonCont>
-            <Link href={'/words-list'}>Words List</Link>
-            <Link href={'/learning'}>Learning</Link>
-            <Link href={'/'}>SignOut</Link>
+            <Link href={'/words-list'}>Список</Link>
+            <Link href={'/learning'}>Картки</Link>
+            <Link href={'/'}>Вийти</Link>
         </MNavButtonCont>
     );
 }

@@ -6,6 +6,7 @@ import { useAppSelector, useAppDispatch } from '@/store/hooks'
 import { Colors } from "@/app/theme/colors";
 import { useEffect, useState } from "react";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Link from "next/link";
 
 const MCategorySelector = styled(Box,{
     name: 'MCategorySelector',
@@ -37,6 +38,7 @@ export default function CategorySelector(props: CategoryInterface) {
 
     return (
       <MCategorySelector>
+        <Link href={'/add-word'}>Додати</Link>
          <FormControl className="category_selector" >
               <InputLabel  id="demo-simple-select-label">Category</InputLabel>
               <Select
