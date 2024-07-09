@@ -67,7 +67,7 @@ export default function WordsList(props: listData) {
       dispatch(updateUserWords({id, word}));
       updData(id, word);
     }else{
-      const word = {learning: true }
+      const word = {learning: true,negAnswer: 1, posAnswer: 0}
       dispatch(updateUserWords({id, word}));
       updData(id, word);
     }
