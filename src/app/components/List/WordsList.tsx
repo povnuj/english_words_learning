@@ -62,7 +62,8 @@ export default function WordsList(props: listData) {
   const dispatch = useAppDispatch();
 
   const clickHandle = (id: string) =>{
-    if(userList[id].learning){
+    //console.log(userList);
+    if(typeof userList[id] === 'undefined' ||  userList[id].learning ){
       const word = {learning: false, negAnswer: 1, posAnswer: 0 }
       dispatch(updateUserWords({id, word}));
       updData(id, word);
