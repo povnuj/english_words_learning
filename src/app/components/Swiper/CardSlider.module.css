@@ -1,0 +1,22 @@
+.card_swiper{
+    margin-top: 90px;
+    width: 240px;
+    height: 370px;
+    /* border-radius: 20px;
+    box-shadow: 4px 4px 30.8px 0px #0034943d;
+    margin-top: 50px; */
+    cursor: pointer;
+}
+.swiper_slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    background-color: #D9D9D9;
+    font-size: 22px;
+    font-weight: bold;
+    color: red;
+    border: 1px solid #000;
+  }
+  
+ 
