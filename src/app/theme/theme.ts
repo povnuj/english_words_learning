@@ -94,7 +94,11 @@ theme = createTheme(theme,{
                     width: '100%',
                     marginTop: '10px',
                     display: 'flex',
+                    alignItems: 'center',
                     justifyContent: 'flex-end',
+                    'img': {
+                        marginRight: '10px',
+                    },
                     '.category_selector': {
                         maxWidth: '300px',
                         minWidth: '200px',
@@ -130,6 +134,11 @@ theme = createTheme(theme,{
                     alignItems: 'center',
                     flexDirection: 'column',
                     justifyContent: 'flex-end',
+                    padding: '10px 10px 0',
+                    'h3': {
+                        display: 'flex',
+                        textAlign: 'center',
+                    },
                     '.button_cont': {
                         display: 'flex',
                         alignItems: 'center',
@@ -213,7 +222,9 @@ theme = createTheme(theme,{
                     '.list_col2': {
                         textTransform: "uppercase",
                         [theme.breakpoints.down('md')]: {
-                            minWidth: '90px',
+                            marginLeft: '10px',
+                            width: '100%',
+
                             'span': {
                                 fontSize: '12px',
                             },
@@ -250,6 +261,9 @@ theme = createTheme(theme,{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'flex-start',
+                    [theme.breakpoints.down('md')]: {
+                        justifyContent: 'flex-end',
+                    },
                     'a': {
                         fontSize: 'inherit',
                         color: 'inherit',
