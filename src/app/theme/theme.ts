@@ -60,7 +60,7 @@ theme = createTheme(theme,{
         fontFamily: 'Roboto, sans-serif',
 
         h3:{
-            fontSize: '1em',
+            fontSize: 'clamp(1rem, 0.9vw, 1rem)',
             fontWeight: 700,
             lineHeight: '28px',
             textTransform: 'uppercase',
@@ -173,7 +173,8 @@ theme = createTheme(theme,{
             styleOverrides: {
                 root:{
                     [theme.breakpoints.down('md')]: {
-                        minWidth: '30px',
+                        width: '30px',
+                        display: 'flex',
                         
                     },
                 }
@@ -189,14 +190,21 @@ theme = createTheme(theme,{
                     borderBottom: `1px solid ${Colors.lightGray}`,
                     maxWidth: 900,
                     margin: '0 auto',
+                    '.checkbox-ico': {
+                        width: '30px',
+                        display: 'contents',
+
+                    },
                     '.list_col1': {
                         textTransform: "uppercase", 
                         maxWidth: '200px', 
-                        marginLeft: '50px', 
-                        marginRight: '100px',
+                        //marginLeft: '50px', 
+                        //marginRight: '100px',
                         [theme.breakpoints.down('md')]: {
-                            marginLeft: '-10px', 
+                            marginLeft: '10px', 
+                            width: '100%',
                             'span': {
+                                width: '100%',
                                 fontSize: '12px',
                             },
                         },

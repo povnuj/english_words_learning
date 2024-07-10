@@ -99,7 +99,7 @@ export default function WordsList(props: listData) {
             disablePadding
           >
             <ListItemButton role={undefined} onClick={()=>clickHandle(value.id!)} dense>
-              <ListItemIcon>
+              <ListItemIcon className='checkbox-ico'>
                 <MCheckbox
                   className='checkbox-list'
                   edge="start"

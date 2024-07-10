@@ -8,6 +8,7 @@ import { CardInterface } from "@/Interfaces/Interfces";
 import { useEffect, useState } from "react";
 import { changLang, updCard } from "@/store/cards-store";
 import { Colors } from "../theme/colors";
+import { speak } from "@/services/audio-services";
 
 const MCard = styled(Box,{
     name: 'MCard',
@@ -92,7 +93,9 @@ export default function LearningCard(props: CardInterface & TrueInterface) {
         updData(props.id, word);
         props.truefn();    
     };
-
+    const speakHandler = (text: string) => {
+        speak(text);
+    };
     
 
     return (
@@ -107,6 +110,9 @@ export default function LearningCard(props: CardInterface & TrueInterface) {
                     
                     <Button onClick={changeLamgHandler}>
                         <Image src={'/assets/ico/change.png'} alt="eye ico" width={18} height={18}  />
+                    </Button>
+                    <Button onClick={()=>speakHandler(props.en!)}>
+                        <Image src={'/assets/ico/play.png'} alt="eye ico" width={18} height={18}  />
                     </Button>
                 </Box>
             </Box>
@@ -134,6 +140,9 @@ export default function LearningCard(props: CardInterface & TrueInterface) {
                     
                     <Button onClick={changeLamgHandler}>
                         <Image src={'/assets/ico/change.png'} alt="eye ico" width={18} height={18}  />
+                    </Button>
+                    <Button onClick={()=>speakHandler(props.en!)}>
+                        <Image src={'/assets/ico/play.png'} alt="eye ico" width={18} height={18}  />
                     </Button>
                 </Box>
             </Box>
