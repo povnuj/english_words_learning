@@ -7,7 +7,7 @@ export function speak(text: string, language = 'en-US') {
     
         utterance.lang = language; 
         utterance.pitch = 0; // Висота голосу (0 до 2)
-        utterance.rate = 1;  // Швидкість мовлення (0.1 до 10)
+        utterance.rate = 0.7;  // Швидкість мовлення (0.1 до 10)
         utterance.volume = 1; // Гучність (0 до 1)
 
         // Озвучення тексту
