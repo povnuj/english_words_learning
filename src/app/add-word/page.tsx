@@ -8,11 +8,12 @@ import { Word, StringParser } from '@/services/words-services';
  
 export default function Login() {
  const router = useRouter()
+ const category = useAppSelector((state) => state.words.selectedCategory);
  
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    // const category = useAppSelector((state) => state.words.selectedCategory);
-    const category = 'new';
+    console.log(category);
+    // const category = 'new';
 
     const formData = new FormData(event.currentTarget)
     const en = formData.get('en')?.toString();
