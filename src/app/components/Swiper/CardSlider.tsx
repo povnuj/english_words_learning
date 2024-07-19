@@ -32,8 +32,14 @@ export default function CardSlider(){
   const theme = useTheme();
   const slides = useAppSelector((state) => state.cards.allCards) ; 
 
-  // useEffect(() =>{
-  //   console.log(slides);
+  //  useEffect(() =>{
+  //    console.log("slides");
+  //    if (swiperRef.current && swiperRef.current.swiper) {
+  //     //swiperRef.current.swiper.destroy();
+  //     swiperRef.current.swiper.update();
+  //     swiperRef.current.swiper.updateSlides()
+  //   }
+    
   // },[slides]);
 
   const handlePrev = () => {
@@ -47,8 +53,13 @@ export default function CardSlider(){
       swiperRef.current.swiper.slideNext();
     }
   };
-  const trueHandler = () => {
-    handleNext();
+  const trueHandler = (upd: boolean) => {
+    if(upd){
+      swiperRef.current.swiper.updateSlides();
+      swiperRef.current.swiper.update();
+    }else{
+      handleNext();
+    }
   };
 
 

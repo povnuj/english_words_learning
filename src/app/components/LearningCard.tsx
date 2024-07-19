@@ -39,6 +39,7 @@ const updData = async (id: string, word: {}) => {
 export default function LearningCard(props: CardInterface & TrueInterface) {
     const [isPeek, setIsPeek] = useState(false);
     const [isFalse, setIsFalse] = useState(false);
+    const [isUpdSlider, setIsUpdSlider] = useState(false);
     const dispatch = useAppDispatch();
 
     
@@ -80,6 +81,7 @@ export default function LearningCard(props: CardInterface & TrueInterface) {
         dispatch(updCard({progress: props.posAnswer / (props.negAnswer *8), id: props.id, ...word}));
         updData(props.id, word);
     };
+    
 
     const trueHandler = () => {
         //console.log(props.posAnswer / (props.negAnswer *8));
@@ -89,9 +91,13 @@ export default function LearningCard(props: CardInterface & TrueInterface) {
             posAnswer: posAnswer,
             negAnswer: props.negAnswer
         }
+        if(!word.learning) {
+            setIsUpdSlider(!isUpdSlider);
+        }
         dispatch(updCard({progress: props.posAnswer / (props.negAnswer *8), id: props.id, ...word}));
         updData(props.id, word);
-        props.truefn();    
+        props.truefn(isUpdSlider);   
+        if(isUpdSlider) setIsUpdSlider(!isUpdSlider); 
     };
     const speakHandler = (text: string) => {
         speak(text);

@@ -66,7 +66,6 @@ export default function WordListPage() {
     return (
         <MainContainer>
             <CategorySelector wordsList={wordsList} selectedCategory={selectedCategory} categoryList={categoryList} changeCategoryfn={changeCategoryHandler} />
-            
             <WordsList data={wordsList} />
         </MainContainer>
     );
