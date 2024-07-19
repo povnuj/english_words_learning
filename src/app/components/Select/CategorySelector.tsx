@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Link from "next/link";
 import Image from "next/image";
+import { WordsInterface } from "@/Interfaces/Interfces";
 
 const MCategorySelector = styled(Box,{
     name: 'MCategorySelector',
@@ -21,6 +22,7 @@ interface CategoryInterface {
   selectedCategory: string;
   categoryList: string[];
   changeCategoryfn: Function;
+  wordsList: WordsInterface[];
 }
 
 export default function CategorySelector(props: CategoryInterface) {
@@ -43,7 +45,7 @@ export default function CategorySelector(props: CategoryInterface) {
           <Image src={'/assets/ico/add.png'} alt="eye ico" width={25} height={25}  />
         </Link>
          <FormControl className="category_selector" >
-              <InputLabel  id="demo-simple-select-label">Category</InputLabel>
+              <InputLabel  id="demo-simple-select-label">{`Category (${props.wordsList.length})`}</InputLabel>
               <Select
                 className="select"
                 labelId="demo-simple-select-label"
