@@ -39,6 +39,7 @@ declare module '@mui/material/styles'{
         MCard: {},
         MCategorySelector: {},
         MCheckbox: {},
+        MMainCard: {},
     }
 }
 
@@ -65,7 +66,34 @@ theme = createTheme(theme,{
             lineHeight: '28px',
             textTransform: 'uppercase',
         },
-        
+        h2:{
+            fontSize: 36,
+            fontWeight: 700,
+            lineHeight: '28px',
+            textTransform: 'uppercase',
+            [theme.breakpoints.between('xs' , "lg")]: {
+                fontSize: 22,
+                lineHeight: '24px',
+            },
+        },
+        subtitle1: {
+            fontSize: 22,
+            fontWeight: 600,
+            textTransform: 'uppercase',
+            marginTop: 30,
+            [theme.breakpoints.between('xs' , "lg")]: {
+                fontSize: 18,
+                lineHeight: '20px',
+            },
+        },
+        caption: {
+            fontSize: 18,
+            marginTop: 30,
+            [theme.breakpoints.between('xs' , "lg")]: {
+                fontSize: 16,
+                lineHeight: '18px',
+            },
+        },
      
         buttonGreenText:{
             fontSize: 27,
@@ -88,6 +116,94 @@ theme = createTheme(theme,{
     },
 
     components:{
+
+        MMainCard: {
+            styleOverrides: {
+                root:{
+                    marginTop: 30,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    // border : `1px solid  ${Colors.light}`,
+                    ".word_form_block": {
+                        width: '100%',
+                        maxWidth: '600px',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        "&-sec1, &-sec2, &-sec3": {
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                            color: Colors.lightGray,
+                            fontSize: 18,
+                            [theme.breakpoints.between('xs' , "lg")]: {
+                                fontSize: 16,
+                                lineHeight: '18px',
+                            },
+                            "div": {
+                                // marginTop: '20px',
+                                height: '50px',
+                                display: 'flex',
+                                alignItems: 'center',
+                            },
+                            
+                        },
+                        "&-sec3": {
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                        },
+                        "&-sec4": {
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                        },
+                        ".line_top": {
+                            position: 'relative',
+                            background: Colors.lightGray,
+                            width: '50px',
+                            height: '2px',
+                            transform: 'rotateZ(45deg)',
+                            bottom: '15px',
+                            right: '-9px',
+                        },
+                        ".line_middle": {
+                            position: 'relative',
+                            background: Colors.lightGray,
+                            width: '50px',
+                            height: '2px',
+                            
+
+                        },
+                        ".line_bottom": {
+                            position: 'relative',
+                            top: '15px',
+                            background: Colors.lightGray,
+                            width: '50px',
+                            height: '2px',
+                            transform: 'rotateZ(-45deg)',
+                            right: '-9px',
+                        },
+                        
+                    },
+                    ".block_container": {
+                        marginLeft: 30,
+                        [theme.breakpoints.between('xs' , "lg")]: {
+                            marginLeft: 0,
+                        },
+                    },
+                    "ul": {
+                        color: Colors.light,
+                        marginLeft: 30,
+                        listStyle: 'none',
+                        "li:before":{
+                            content: "'-  '",
+                            
+                        },
+                    },
+                }
+            } 
+        },
+
         MCategorySelector: {
             styleOverrides: {
                 root:{

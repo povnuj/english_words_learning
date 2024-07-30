@@ -41,8 +41,8 @@ export async function GET(request: NextRequest) {
       };
       
       if(userData.words.hasOwnProperty(selectedCategory)){
-        console.log("=======================================",  Object.keys(userData.words[selectedCategory]).length);
-        console.log("=======================================",  Object.keys(mUserData.words[selectedCategory]).length);
+        // console.log("=======================================",  Object.keys(userData.words[selectedCategory]).length);
+        // console.log("=======================================",  Object.keys(mUserData.words[selectedCategory]).length);
         if(Object.keys(userData.words[selectedCategory]).length !== Object.keys(mUserData.words[selectedCategory]).length){
           updUserCategory();
           userResp = await fetch('https://wordslearning-255d7-default-rtdb.firebaseio.com/users/'+email?.value!.replace('.','_')+`.json`);
