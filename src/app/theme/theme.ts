@@ -91,7 +91,7 @@ theme = createTheme(theme,{
             marginTop: 30,
             [theme.breakpoints.between('xs' , "lg")]: {
                 fontSize: 16,
-                lineHeight: '18px',
+                lineHeight: '22px',
             },
         },
      
@@ -146,6 +146,9 @@ theme = createTheme(theme,{
                                 alignItems: 'center',
                             },
                             
+                        },
+                        "&-sec1": {
+                            alignItems: 'flex-end',
                         },
                         "&-sec3": {
                             display: 'flex',
