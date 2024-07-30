@@ -57,8 +57,8 @@ export default async function Home() {
                     <div>? - Does</div>
                   </div>
                   <div className="word_form_block-sec2">
-                    <div>х -  Don't</div>
-                    <div>x - Doesn't</div>
+                    <div>х -  Do not</div>
+                    <div>x - Does not</div>
                   </div>
                 </div>
           </div>
