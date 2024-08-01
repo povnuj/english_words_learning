@@ -125,7 +125,10 @@ theme = createTheme(theme,{
                     flexDirection: 'column',
                     // border : `1px solid  ${Colors.light}`,
                     "section": {
-                        marginBottom: 60
+                        marginBottom: 60,
+                        "h2": {
+                            textDecoration: 'underline',
+                        },
                     },
                     ".word_form_block": {
                         width: '100%',

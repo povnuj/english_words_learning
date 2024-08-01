@@ -18,7 +18,7 @@ export default async function Home() {
   return (
     <MainContainer>
       <MMainCard>
-      <section>
+        <section>
           <Typography variant="h2" color={Colors.light}>Present Simple</Typography>
           <div className="block_container">
             <Typography variant="subtitle1" color={Colors.light}>Коли використовувати:</Typography>
@@ -102,6 +102,91 @@ export default async function Home() {
                   </div>
                   <div className="word_form_block-sec3">
                     <div>verb + ing</div>
+                  </div>
+                </div>
+          </div>
+        </section>
+        <section>
+          <Typography variant="h2" color={Colors.light}>Present Perfect Simple</Typography>
+          <div className="block_container">
+            <Typography variant="subtitle1" color={Colors.light}>Коли використовувати:</Typography>
+            <ul>
+              <li><Typography variant="caption" color={Colors.light}>Дії які почались у минулому але ще досі дійсні</Typography></li>
+              <li><Typography variant="caption" color={Colors.light}>Завершені дії про які не згадано (досвід)</Typography></li>
+              <li><Typography variant="caption" color={Colors.light}>Завершені дії де важливий результат</Typography></li>
+            </ul>
+          </div>
+          <div className="block_container">
+            <Typography variant="subtitle1" color={Colors.light}>Допоміжні слова:</Typography>
+            <ul>
+              <li><Typography variant="caption" color={Colors.light}>For</Typography></li>
+              <li><Typography variant="caption" color={Colors.light}>Since</Typography></li>
+              <li><Typography variant="caption" color={Colors.light}>Just</Typography></li>
+              <li><Typography variant="caption" color={Colors.light}>Already</Typography></li>
+              <li><Typography variant="caption" color={Colors.light}>Yet</Typography></li>
+              <li><Typography variant="caption" color={Colors.light}>Ever</Typography></li>
+              <li><Typography variant="caption" color={Colors.light}>Never</Typography></li>
+              <li><Typography variant="caption" color={Colors.light}>It is the</Typography></li>
+              <li><Typography variant="caption" color={Colors.light}>First time</Typography></li>
+            </ul>
+          </div>
+          <div className="block_container">
+            <Typography variant="subtitle1" color={Colors.light}>Як використовувати:</Typography>
+                <div className="word_form_block">
+                  <div className="word_form_block-sec1">
+                    <div>I / You / We / They</div>
+                    <div>He / She / It</div>
+                  </div>
+                  <div className="word_form_block-sec2">
+                    <div>Have + past participle</div>
+                    <div>Has + past participle</div>
+                  </div>
+                  <div className="word_form_block-sec2">
+                    <div>? - Have</div>
+                    <div>? - Has</div>
+                  </div>
+                  <div className="word_form_block-sec2">
+                    <div>х -  Have not</div>
+                    <div>x - Has not</div>
+                  </div>
+                </div>
+          </div>
+        </section>
+        <section>
+          <Typography variant="h2" color={Colors.light}>Present Perfect Continuous</Typography>
+          <div className="block_container">
+            <Typography variant="subtitle1" color={Colors.light}>Коли використовувати:</Typography>
+            <ul>
+              <li><Typography variant="caption" color={Colors.light}>Ситуація яка почалась у минулому, або тільки що і ще досі дійсні</Typography></li>
+              <li><Typography variant="caption" color={Colors.light}>(Акцент на часі події)</Typography></li>
+            </ul>
+          </div>
+          <div className="block_container">
+            <Typography variant="subtitle1" color={Colors.light}>Допоміжні слова:</Typography>
+            <ul>
+              <li><Typography variant="caption" color={Colors.light}>For</Typography></li>
+              <li><Typography variant="caption" color={Colors.light}>Since</Typography></li>
+              <li><Typography variant="caption" color={Colors.light}>Just</Typography></li>
+            </ul>
+          </div>
+          <div className="block_container">
+            <Typography variant="subtitle1" color={Colors.light}>Як використовувати:</Typography>
+                <div className="word_form_block">
+                  <div className="word_form_block-sec1">
+                    <div>I / You / We / They</div>
+                    <div>He / She / It</div>
+                  </div>
+                  <div className="word_form_block-sec2">
+                    <div>Have + been + verb + ing</div>
+                    <div>Has + been + verb + ing</div>
+                  </div>
+                  <div className="word_form_block-sec2">
+                    <div>? - Have</div>
+                    <div>? - Has</div>
+                  </div>
+                  <div className="word_form_block-sec2">
+                    <div>х -  Have not</div>
+                    <div>x - Has not</div>
                   </div>
                 </div>
           </div>

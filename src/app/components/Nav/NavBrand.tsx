@@ -4,6 +4,7 @@ import useMediaQuery, { UseMediaQueryOptions } from "@mui/material/useMediaQuery
 import { useTheme } from '@mui/material/styles';
 import { useAppSelector, useAppDispatch } from '@/store/hooks'
 import Image from "next/image";
+import Link from "next/link";
 
 const MNavBrand = styled(Box,{
     name: 'MNavBrand',
@@ -26,7 +27,9 @@ export default function NavBrand() {
 
     return (
         <MNavBrand>
-          <Image src='/assets/brand/LogoEWL.svg' alt="Logo" width={50} height={50} />
+          <Link href={'/'}>
+            <Image src='/assets/brand/LogoEWL.svg' alt="Logo" width={50} height={50} />
+          </Link>
         </MNavBrand>
     );
 }
